@@ -9,7 +9,7 @@ import { Amplify } from 'aws-amplify';
 import config from '../aws-exports';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import { media } from './assets/constants';
+import { media, nav } from './assets/constants';
 import Navbar from './Navbar';
 import Home from './Home';
 import Friends from './Friends';
@@ -23,6 +23,7 @@ Amplify.configure(config);
 const AppWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   color: orange;
 
   @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
@@ -34,10 +35,14 @@ const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 80%;
-  max-width: 800px;
-
+  max-width: 600px;
+  position: relative;
 
   background: tan;
+
+  @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
+    margin-top: ${nav.MOBILE_HEIGHT};
+  }
 `;
 
 function App( {signOut, user }) {
