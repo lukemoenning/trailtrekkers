@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-trailtrekkers-dev-211159-authRole",
+      "UnauthRoleArn": "arn:aws:iam::366302787092:role/amplify-trailtrekkers-dev-211159-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::366302787092:role/amplify-trailtrekkers-dev-211159-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-trailtrekkers-dev-211159-deployment",
+      "UnauthRoleName": "amplify-trailtrekkers-dev-211159-unauthRole",
+      "StackName": "amplify-trailtrekkers-dev-211159",
+      "StackId": "arn:aws:cloudformation:us-east-2:366302787092:stack/amplify-trailtrekkers-dev-211159/8affa910-954b-11ed-a9dd-0adf13893686",
+      "AmplifyAppId": "dcjg0y9lf27z7"
+    },
+    "categories": {
+      "auth": {
+        "trailtrekkers0fbf3b77": {}
+      }
+    }
+  }
+}
