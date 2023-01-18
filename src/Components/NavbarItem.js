@@ -18,6 +18,7 @@ const NavbarItemWrapper = styled.div`
 
   &:hover {
     transform: scale(1.1, 1.1);
+    cursor: pointer;
   }
 `;
 
@@ -26,9 +27,9 @@ const NavbarItemTitle = styled.h3`
 `;
 
 
-function NavbarItem({ title, Icon, isDesktop }) {
+function NavbarItem({ title, Icon, isDesktop, signOut }) {
   return (
-    <NavbarItemWrapper>
+    <NavbarItemWrapper onClick={signOut ? signOut : () => {}}>
 
       {/* ICON */}
       <SvgIcon component={Icon}/>

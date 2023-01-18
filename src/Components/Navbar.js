@@ -81,7 +81,7 @@ function Navbar( {signOut }) {
       </NavLinksWrapper>
 
       {/* SIGN OUT BUTTON */}
-      <NavbarItem onClick={signOut} title={'Sign Out'} Icon={ExitToApp} isDesktop={isDesktop()}></NavbarItem>
+      <NavbarItem title={'Sign Out'} Icon={ExitToApp} isDesktop={isDesktop()} signOut={signOut}></NavbarItem>
 
     </NavWrapper>
   );
