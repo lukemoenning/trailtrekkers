@@ -6,8 +6,15 @@
 /** 
  * Colors theme
  */
-export const theme = {
-  
+export const palette = {
+  "GREEN": "#124715",
+  "LIGHT_GREEN": "#bdb76b",
+  "DARK_GREEN": "#0A2912",
+  "BROWN": "#8b5e3c",
+  "GRAY": "#a9a9a9",
+  "WHITE": "#ffffff",
+  "OFF_WHITE": "#f9f9f9",
+  "BLACK": "#000000",
 };
 
 

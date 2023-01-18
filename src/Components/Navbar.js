@@ -5,9 +5,10 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { theme, media, nav } from './assets/constants';
+import { palette, media, nav } from './assets/constants';
 import { Home, Groups, Explore, Map, AccountCircle, ExitToApp } from '@mui/icons-material';
 import NavbarItem from './NavbarItem';
+import { ReactComponent as Logo } from './assets/images/trailtrekkers-logo.svg';
 
 
 const NavWrapper = styled.div`
@@ -19,7 +20,7 @@ const NavWrapper = styled.div`
   left: 0;
   height: ${nav.DESKTOP_HEIGHT};
   width: ${nav.DESKTOP_WIDTH};
-  background: yellow;
+  background: ${palette.DARK_GREEN};
 
   @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
     flex-direction: row;
@@ -36,6 +37,11 @@ const NavLinksWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
   }
+`;
+
+const NavLogo = styled(Logo)`
+  margin: 10px;
+  filter: invert(92%) sepia(93%) saturate(0%) hue-rotate(202deg) brightness(106%) contrast(106%);
 `;
 
 function Navbar( {signOut }) {
@@ -73,11 +79,15 @@ function Navbar( {signOut }) {
 
       {/* Navigation Links */}
       <NavLinksWrapper>
+
+        {/* DISPLAY THE LOGO ONLY IF ON A DESKTOP */}
+        {isDesktop() && <Link to='/'><NavLogo height={'50px'} width={'160px'}/></Link>}
+
         <Link to='/'><NavbarItem title={'Home'} Icon={Home} isDesktop={isDesktop()}></NavbarItem></Link>
         <Link to='/friends'><NavbarItem title={'Friends'} Icon={Groups} isDesktop={isDesktop()}></NavbarItem></Link>
         <Link to='/discover'><NavbarItem title={'Discover'} Icon={Explore} isDesktop={isDesktop()}></NavbarItem></Link>
         <Link to='/map'><NavbarItem title={'Map'} Icon={Map} isDesktop={isDesktop()}></NavbarItem></Link>
-        <Link to='/'><NavbarItem title={'Profile'} Icon={AccountCircle} isDesktop={isDesktop()}></NavbarItem></Link>
+        <Link to='/profile'><NavbarItem title={'Profile'} Icon={AccountCircle} isDesktop={isDesktop()}></NavbarItem></Link>
       </NavLinksWrapper>
 
       {/* SIGN OUT BUTTON */}

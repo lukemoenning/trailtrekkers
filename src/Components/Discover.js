@@ -4,11 +4,14 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { BodyWide } from './Body.styles';
 
 
 function Discover() {
   return (
-    <div>Discover</div>
+    <BodyWide>
+      <h1>discover</h1>
+    </BodyWide>
   );
 };
 

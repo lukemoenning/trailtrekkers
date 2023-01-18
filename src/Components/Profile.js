@@ -4,11 +4,14 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { BodyNarrow } from './Body.styles';
 
 
 function Profile() {
   return (
-    <div>Profile</div>
+    <BodyNarrow>
+      <h1>profile</h1>
+    </BodyNarrow>
   );
 };
 

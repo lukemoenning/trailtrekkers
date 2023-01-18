@@ -9,7 +9,7 @@ import { Amplify } from 'aws-amplify';
 import config from '../aws-exports';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import { media, nav } from './assets/constants';
+import { palette, media, nav } from './assets/constants';
 import Navbar from './Navbar';
 import Home from './Home';
 import Friends from './Friends';
@@ -24,19 +24,11 @@ const AppWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-`;
-
-const BodyWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  max-width: 600px;
-  position: relative;
-
-  background: tan;
-
-  @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
-    margin-top: ${nav.MOBILE_HEIGHT};
+  background: ${palette.OFF_WHITE};
+  min-height: 100vh;
+  
+  @media (min-width: ${media.DESKTOP_MIN_WIDTH}) {
+    margin-left: ${nav.DESKTOP_WIDTH};
   }
 `;
 
@@ -49,15 +41,13 @@ function App( {signOut, user }) {
         <Navbar signOut={signOut} />
 
         {/* BODY CONTENT */}
-        <BodyWrapper>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/friends' element={<Friends />} />
-            <Route path='/discover' element={<Discover />} />
-            <Route path='/map' element={<Map />} />
-            <Route path='/profile' element={<Profile />} />
-          </Routes>
-        </BodyWrapper>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/friends' element={<Friends />} />
+          <Route path='/discover' element={<Discover />} />
+          <Route path='/map' element={<Map />} />
+          <Route path='/profile' element={<Profile />} />
+        </Routes>
 
       </AppWrapper>
     </BrowserRouter>

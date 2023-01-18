@@ -4,11 +4,14 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { BodyNarrow } from './Body.styles';
 
 
 function Friends() {
   return (
-    <div>Friends</div>
+    <BodyNarrow>
+      <h1>friends</h1>
+    </BodyNarrow>
   );
 };
 

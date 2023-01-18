@@ -5,20 +5,21 @@
 import { SvgIcon } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
+import { palette } from './assets/constants';
 
 
-const NavbarItemWrapper = styled.div`
+export const NavbarItemWrapper = styled.div`
   display: flex;
   margin: 10px;
   padding: 10px;
-  outline: 1px solid red;
   transition: ease-in 200ms;
-  color: red;
   border-radius: 20px;
+  color: ${palette.WHITE};
 
   &:hover {
     transform: scale(1.1, 1.1);
     cursor: pointer;
+    background: ${palette.GREEN};
   }
 `;
 

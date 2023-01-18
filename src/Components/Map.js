@@ -4,11 +4,14 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { BodyWide } from './Body.styles';
 
 
 function Map() {
   return (
-    <div>Map</div>
+    <BodyWide>
+      <h1>map</h1>
+    </BodyWide>
   );
 };
 
