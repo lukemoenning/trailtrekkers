@@ -24,11 +24,6 @@ const AppWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  color: orange;
-
-  @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
-    color: red;
-  }
 `;
 
 const BodyWrapper = styled.div`
@@ -51,7 +46,7 @@ function App( {signOut, user }) {
       <AppWrapper>
 
         {/* NAVBAR */}
-        <Navbar />
+        <Navbar signOut={signOut} />
 
         {/* BODY CONTENT */}
         <BodyWrapper>

@@ -2,15 +2,18 @@
  * Navigation bar
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { theme, media, nav } from './assets/constants';
+import { Home, Groups, Explore, Map, AccountCircle, ExitToApp } from '@mui/icons-material';
+import NavbarItem from './NavbarItem';
 
 
 const NavWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   position: absolute;
   top: 0;
   left: 0;
@@ -27,26 +30,59 @@ const NavWrapper = styled.div`
   }
 `;
 
-const NavLink = styled(Link)`
-  text-decoration: none;
-  margin: 10px;
-  padding: 10px;
-  outline: 1px solid red;
-  transition: ease-in 200ms;
-
-  &:hover {
-    transform: scale(1.1, 1.1);
+const NavLinksWrapper = styled.div`
+  @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
 `;
 
-function Navbar() {
+function Navbar( {signOut }) {
+
+  /**
+   * Width of the current window
+   */
+  const [width, setWidth] = useState(window.innerWidth);
+
+  /**
+   * @returns {boolean} if the current window size is greater than the minimum desktop size
+   */
+  const isDesktop = () => {
+    const desktopMinWidth = media.DESKTOP_MIN_WIDTH.slice(0, -2);
+    return width > new Number(desktopMinWidth);
+  }
+
+  /**
+   * Handles updating width state on a window resize
+   */
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
   return (
     <NavWrapper>
-      <NavLink to='/'>Home</NavLink>
-      <NavLink to='/friends'>Friends</NavLink>
-      <NavLink to='/discover'>Discover</NavLink>
-      <NavLink to='/map'>Map</NavLink>
-      <NavLink to='/profile'>Profile</NavLink>
+
+      {/* Navigation Links */}
+      <NavLinksWrapper>
+        <Link to='/'><NavbarItem title={'Home'} Icon={Home} isDesktop={isDesktop()}></NavbarItem></Link>
+        <Link to='/friends'><NavbarItem title={'Friends'} Icon={Groups} isDesktop={isDesktop()}></NavbarItem></Link>
+        <Link to='/discover'><NavbarItem title={'Discover'} Icon={Explore} isDesktop={isDesktop()}></NavbarItem></Link>
+        <Link to='/map'><NavbarItem title={'Map'} Icon={Map} isDesktop={isDesktop()}></NavbarItem></Link>
+        <Link to='/'><NavbarItem title={'Profile'} Icon={AccountCircle} isDesktop={isDesktop()}></NavbarItem></Link>
+      </NavLinksWrapper>
+
+      {/* SIGN OUT BUTTON */}
+      <NavbarItem onClick={signOut} title={'Sign Out'} Icon={ExitToApp} isDesktop={isDesktop()}></NavbarItem>
+
     </NavWrapper>
   );
 };
