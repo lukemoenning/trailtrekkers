@@ -2,10 +2,10 @@
  * App component
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Amplify } from 'aws-amplify';
+import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import config from '../aws-exports';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
@@ -16,6 +16,9 @@ import Friends from './Friends';
 import Discover from './Discover';
 import Map from './Map';
 import Profile from './Profile';
+import { listUsers } from '../graphql/queries';
+import { createUser } from '../graphql/mutations';
+
 
 
 Amplify.configure(config);
@@ -32,7 +35,68 @@ const AppWrapper = styled.div`
   }
 `;
 
+
+
 function App( {signOut, user }) {
+
+  const [activeUser, setActiveUser] = useState(null)
+
+  useEffect(() => {
+    setActiveUser(fetchUser(user));
+    console.log(activeUser)
+  },[])
+
+  /**
+   * Fetch the user information from Dynamo that corresponds with the user who signed in
+   */
+  const fetchUser = async (user) => {
+    try {
+        const users = await API.graphql({
+          query: listUsers,
+          authMode: 'AMAZON_COGNITO_USER_POOLS'
+        });
+        
+        let userFound = false;
+        users.data.listUsers.items.forEach(item => {
+          if (item.username == user.username) {
+            setActiveUser(item);
+            console.log(item);
+            userFound = true;
+          }
+        });
+
+        if (!userFound) {
+          // createNewUser(user.username)
+          console.log('user not found');
+        }
+
+    } catch (error) {
+        console.log('error:', error)
+    }
+  }
+
+  /**
+   * Creates a new user in the database if one with a matching username does not exist
+   */
+  const createNewUser = async (username) => {
+    try {
+      const user = {
+        username: username
+      };
+
+      const newUser = await API.graphql({
+        query: createUser,
+        variables: {input: user},
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+    
+    } catch (error) {
+        console.log('createUser Error', error)
+    }
+  };
+
+
+
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <AppWrapper>

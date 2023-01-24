@@ -13,3 +13,6 @@
 > $ docker-compose up -d <br />
 > $ docker-compose down <br />
 > $ docker-compose up -d --build <br />
+
+## amplify 
+> $ amplify env pull --restore

@@ -1,4 +1,30 @@
 {
+  "api": {
+    "userAPI": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "trailtrekkers0fbf3b77"
+        }
+      ],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "authtrailtrekkers0fbf3b77"
+            }
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
   "auth": {
     "trailtrekkers0fbf3b77": {
       "customAuth": false,
@@ -23,6 +49,31 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "postNewUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_postNewUser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postNewUser"
+        }
+      ]
+    },
+    "AMPLIFY_function_postNewUser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "postNewUser"
+        }
+      ]
     }
   }
 }
