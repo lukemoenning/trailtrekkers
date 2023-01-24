@@ -1,16 +1,14 @@
-var aws = require('aws-sdk');
-var ddb = new aws.DynamoDB();
+const aws = require('aws-sdk');
+const ddb = new aws.DynamoDB();
 
 exports.handler = async (event, context) => {
     
-    let date = new Date();
-    console.log('lambda function ran')
+    const date = new Date();
 
     if (event.request.userAttributes.sub) {
-        console.log('attributes', event.request.userAttributes)
-        console.log('event', event)
+        console.log('Event: ', event)
 
-        let params = {
+        const newUser = {
             Item: {
                 'id': {S: event.request.userAttributes.sub},
                 'username': {S: event.userName},
@@ -21,20 +19,18 @@ exports.handler = async (event, context) => {
             TableName: 'User-aufzkgi345czrchokktdnaiuqu-dev'
         };
 
-        // Call DynamoDB
+        // Try to place the new user in the database
         try {
-            await ddb.putItem(params).promise()
-            console.log("Success");
-        } catch (err) {
-            console.log("Error", err);
+            await ddb.putItem(newUser).promise()
+            console.log("New user created in database");
+        } catch (error) {
+            console.log("Error: ", error);
         }
 
-        console.log("Success: Everything executed correctly");
         context.done(null, event);
 
     } else {
-        // Nothing to do, the user's email ID is unknown
-        console.log("Error: Nothing was written to DynamoDB");
+        console.log("Error passing user from cognito");
         context.done(null, event);
     }
 };

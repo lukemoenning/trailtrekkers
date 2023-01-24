@@ -21,7 +21,7 @@
       "function": {
         "postNewUser": {
           "deploymentBucketName": "amplify-trailtrekkers-dev-211159-deployment",
-          "s3Key": "amplify-builds/postNewUser-644950527a356a6e522b-build.zip"
+          "s3Key": "amplify-builds/postNewUser-3541786d665941794d49-build.zip"
         }
       }
     }
