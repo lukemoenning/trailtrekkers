@@ -5,28 +5,68 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Form, FormGroup, Input, TextArea, ImagePicker, Button } from 'aws-amplify-react';
+import { View, TextAreaField, Button } from '@aws-amplify/ui-react';
+import { API } from 'aws-amplify';
+import { createHike } from '../graphql/mutations';
+import { getUser } from '../graphql/queries';
+import { v4 as uuidv4 } from 'uuid';
 
 
-const HikeFormWrapper = styled.div`
+const HikeFormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 80%;
-  height: 500px;
+  height: 400px;
+  padding: 10px;
   background: tan;
 `;
 
-function HikeForm() {
-  const [hike, setHike] = useState({ title: '', distance: '', description: '', image: '' });
+const FormItem = styled.div`
+
+`;
+
+const FormInput = styled.input`
+
+`;
+
+const SubmitButton = styled.button`
+
+`;
+
+function HikeForm({ userId }) {
+  const [hike, setHike] = useState({ id: '', user: '5', title: '', distance: '', description: '', imagePath: '', likes: 0});
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {
-      // Add code to send hike data to backend here
-      console.log(hike);
-    } catch (err) {
-      console.log('Error submitting form', err);
-    }
+
+    // Create a unique id for the hike
+    setHike({ ...hike, id: uuidv4()})
+
+    // Set the user the hike is associated with
+    setHike({ ...hike, user: await API.graphql({
+      query: getUser,
+      variables: {
+        input: userId
+      },
+    })})
+
+    const postHike = await API.graphql({
+      query: createHike,
+      variables: {
+        input: hike
+      },
+    }).then(
+      console.log('Hike successfully placed in database')
+    ).catch(
+      error => {console.log('Error: ', error)}
+    )
+
+    // try {
+    //   // Add code to send hike data to backend here
+    //   console.log(hike);
+    // } catch (err) {
+    //   console.log('Error submitting form', err);
+    // }
   }
 
   const handleChange = (event) => {
@@ -34,45 +74,34 @@ function HikeForm() {
     setHike({ ...hike, [name]: value });
   }
 
-  const handleImageChange = (data) => {
-    setHike({ ...hike, image: data });
-  }
-
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormGroup>
-        <Input
-          type="text"
-          name="title"
-          value={hike.title}
-          onChange={handleChange}
-          placeholder="Title"
-        />
-      </FormGroup>
-      <FormGroup>
-        <Input
-          type="text"
-          name="distance"
-          value={hike.distance}
-          onChange={handleChange}
-          placeholder="Distance"
-        />
-      </FormGroup>
-      <FormGroup>
-        <TextArea
-          name="description"
-          value={hike.description}
-          onChange={handleChange}
-          placeholder="Description"
-        />
-      </FormGroup>
-      <FormGroup>
-        <ImagePicker
-          onpick={handleImageChange}
-        />
-        </FormGroup>
-      <Button type="submit">Create Hike</Button>
-    </Form>
+      <HikeFormWrapper onSubmit={handleSubmit}>
+        <View label="Title">
+          <TextAreaField
+            name="title"
+            value={hike.title}
+            onChange={handleChange}
+            placeholder="Title"
+          />
+          </View>
+          <View label="Distance">
+            <TextAreaField
+              name="distance"
+              value={hike.distance}
+              onChange={handleChange}
+              placeholder="Distance"
+            />
+          </View>
+          <View label="Description">
+            <TextAreaField
+              name="description"
+              value={hike.description}
+              onChange={handleChange}
+              placeholder="Description"
+            />
+          </View>
+        <Button type="submit">Create Hike</Button>
+      </HikeFormWrapper>
   );
 }
 

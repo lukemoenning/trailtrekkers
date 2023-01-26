@@ -17,7 +17,7 @@ const MyHikesWrapper = styled.div`
   flex-direction: column; 
 `;
 
-function Profile( {username} ) {
+function Profile( {userId} ) {
 
   
 
@@ -29,7 +29,7 @@ function Profile( {username} ) {
       </ProfileInfo>
 
       <MyHikesWrapper>
-        <HikeForm />
+        <HikeForm userId={userId}/>
       </MyHikesWrapper>
 
     </BodyNarrow>
