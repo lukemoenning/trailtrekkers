@@ -12,22 +12,12 @@ export const getUser = /* GraphQL */ `
           id
           title
           distance
-          createdAt
-          updatedAt
-          userHikesId
-        }
-        nextToken
-      }
-      posts {
-        items {
-          id
-          title
           description
           imagePath
           likes
           createdAt
           updatedAt
-          userPostsId
+          userHikesId
         }
         nextToken
       }
@@ -76,9 +66,6 @@ export const listUsers = /* GraphQL */ `
         hikes {
           nextToken
         }
-        posts {
-          nextToken
-        }
         following {
           nextToken
         }
@@ -98,8 +85,29 @@ export const getHike = /* GraphQL */ `
   query GetHike($id: ID!) {
     getHike(id: $id) {
       id
+      user {
+        id
+        username
+        email
+        hikes {
+          nextToken
+        }
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userFollowingId
+        userFollowersId
+      }
       title
       distance
+      description
+      imagePath
+      likes
       createdAt
       updatedAt
       userHikesId
@@ -115,60 +123,6 @@ export const listHikes = /* GraphQL */ `
     listHikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        title
-        distance
-        createdAt
-        updatedAt
-        userHikesId
-      }
-      nextToken
-    }
-  }
-`;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
-      id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
-      title
-      description
-      imagePath
-      likes
-      createdAt
-      updatedAt
-      userPostsId
-    }
-  }
-`;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
         user {
           id
           username
@@ -179,12 +133,13 @@ export const listPosts = /* GraphQL */ `
           userFollowersId
         }
         title
+        distance
         description
         imagePath
         likes
         createdAt
         updatedAt
-        userPostsId
+        userHikesId
       }
       nextToken
     }

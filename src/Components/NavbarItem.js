@@ -10,6 +10,7 @@ import { palette } from './assets/constants';
 
 export const NavbarItemWrapper = styled.div`
   display: flex;
+  align-items: center;
   margin: 10px;
   padding: 10px;
   transition: ease-in 200ms;

@@ -12,22 +12,12 @@ export const onCreateUser = /* GraphQL */ `
           id
           title
           distance
-          createdAt
-          updatedAt
-          userHikesId
-        }
-        nextToken
-      }
-      posts {
-        items {
-          id
-          title
           description
           imagePath
           likes
           createdAt
           updatedAt
-          userPostsId
+          userHikesId
         }
         nextToken
       }
@@ -73,22 +63,12 @@ export const onUpdateUser = /* GraphQL */ `
           id
           title
           distance
-          createdAt
-          updatedAt
-          userHikesId
-        }
-        nextToken
-      }
-      posts {
-        items {
-          id
-          title
           description
           imagePath
           likes
           createdAt
           updatedAt
-          userPostsId
+          userHikesId
         }
         nextToken
       }
@@ -134,22 +114,12 @@ export const onDeleteUser = /* GraphQL */ `
           id
           title
           distance
-          createdAt
-          updatedAt
-          userHikesId
-        }
-        nextToken
-      }
-      posts {
-        items {
-          id
-          title
           description
           imagePath
           likes
           createdAt
           updatedAt
-          userPostsId
+          userHikesId
         }
         nextToken
       }
@@ -188,8 +158,29 @@ export const onCreateHike = /* GraphQL */ `
   subscription OnCreateHike($filter: ModelSubscriptionHikeFilterInput) {
     onCreateHike(filter: $filter) {
       id
+      user {
+        id
+        username
+        email
+        hikes {
+          nextToken
+        }
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userFollowingId
+        userFollowersId
+      }
       title
       distance
+      description
+      imagePath
+      likes
       createdAt
       updatedAt
       userHikesId
@@ -200,8 +191,29 @@ export const onUpdateHike = /* GraphQL */ `
   subscription OnUpdateHike($filter: ModelSubscriptionHikeFilterInput) {
     onUpdateHike(filter: $filter) {
       id
+      user {
+        id
+        username
+        email
+        hikes {
+          nextToken
+        }
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userFollowingId
+        userFollowersId
+      }
       title
       distance
+      description
+      imagePath
+      likes
       createdAt
       updatedAt
       userHikesId
@@ -212,116 +224,32 @@ export const onDeleteHike = /* GraphQL */ `
   subscription OnDeleteHike($filter: ModelSubscriptionHikeFilterInput) {
     onDeleteHike(filter: $filter) {
       id
+      user {
+        id
+        username
+        email
+        hikes {
+          nextToken
+        }
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userFollowingId
+        userFollowersId
+      }
       title
       distance
+      description
+      imagePath
+      likes
       createdAt
       updatedAt
       userHikesId
-    }
-  }
-`;
-export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
-    onCreatePost(filter: $filter) {
-      id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
-      title
-      description
-      imagePath
-      likes
-      createdAt
-      updatedAt
-      userPostsId
-    }
-  }
-`;
-export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
-    onUpdatePost(filter: $filter) {
-      id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
-      title
-      description
-      imagePath
-      likes
-      createdAt
-      updatedAt
-      userPostsId
-    }
-  }
-`;
-export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
-    onDeletePost(filter: $filter) {
-      id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
-      title
-      description
-      imagePath
-      likes
-      createdAt
-      updatedAt
-      userPostsId
     }
   }
 `;

@@ -8,24 +8,16 @@ type User @model @auth(rules: [{ allow: private }]) {
   username: String!
   email: String!
   hikes: [Hike] @hasMany
-  posts: [Post] @hasMany
   following: [User] @hasMany
   followers: [User] @hasMany
 }
 
 type Hike @model @auth(rules: [{ allow: private }]) {
-  id: ID!
+  id: String!
+  user: User! @belongsTo
   title: String!
   distance: Int!
-}
-
-type Post @model @auth(rules: [{ allow: private }]) {
-  id: ID!
-  user: User @belongsTo
-  title: String!
   description: String!
   imagePath: String!
   likes: Int!
 }
-
-

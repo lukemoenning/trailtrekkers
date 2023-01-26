@@ -15,22 +15,12 @@ export const createUser = /* GraphQL */ `
           id
           title
           distance
-          createdAt
-          updatedAt
-          userHikesId
-        }
-        nextToken
-      }
-      posts {
-        items {
-          id
-          title
           description
           imagePath
           likes
           createdAt
           updatedAt
-          userPostsId
+          userHikesId
         }
         nextToken
       }
@@ -79,22 +69,12 @@ export const updateUser = /* GraphQL */ `
           id
           title
           distance
-          createdAt
-          updatedAt
-          userHikesId
-        }
-        nextToken
-      }
-      posts {
-        items {
-          id
-          title
           description
           imagePath
           likes
           createdAt
           updatedAt
-          userPostsId
+          userHikesId
         }
         nextToken
       }
@@ -143,22 +123,12 @@ export const deleteUser = /* GraphQL */ `
           id
           title
           distance
-          createdAt
-          updatedAt
-          userHikesId
-        }
-        nextToken
-      }
-      posts {
-        items {
-          id
-          title
           description
           imagePath
           likes
           createdAt
           updatedAt
-          userPostsId
+          userHikesId
         }
         nextToken
       }
@@ -200,8 +170,29 @@ export const createHike = /* GraphQL */ `
   ) {
     createHike(input: $input, condition: $condition) {
       id
+      user {
+        id
+        username
+        email
+        hikes {
+          nextToken
+        }
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userFollowingId
+        userFollowersId
+      }
       title
       distance
+      description
+      imagePath
+      likes
       createdAt
       updatedAt
       userHikesId
@@ -215,8 +206,29 @@ export const updateHike = /* GraphQL */ `
   ) {
     updateHike(input: $input, condition: $condition) {
       id
+      user {
+        id
+        username
+        email
+        hikes {
+          nextToken
+        }
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userFollowingId
+        userFollowersId
+      }
       title
       distance
+      description
+      imagePath
+      likes
       createdAt
       updatedAt
       userHikesId
@@ -230,125 +242,32 @@ export const deleteHike = /* GraphQL */ `
   ) {
     deleteHike(input: $input, condition: $condition) {
       id
+      user {
+        id
+        username
+        email
+        hikes {
+          nextToken
+        }
+        following {
+          nextToken
+        }
+        followers {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        userFollowingId
+        userFollowersId
+      }
       title
       distance
+      description
+      imagePath
+      likes
       createdAt
       updatedAt
       userHikesId
-    }
-  }
-`;
-export const createPost = /* GraphQL */ `
-  mutation CreatePost(
-    $input: CreatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    createPost(input: $input, condition: $condition) {
-      id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
-      title
-      description
-      imagePath
-      likes
-      createdAt
-      updatedAt
-      userPostsId
-    }
-  }
-`;
-export const updatePost = /* GraphQL */ `
-  mutation UpdatePost(
-    $input: UpdatePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    updatePost(input: $input, condition: $condition) {
-      id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
-      title
-      description
-      imagePath
-      likes
-      createdAt
-      updatedAt
-      userPostsId
-    }
-  }
-`;
-export const deletePost = /* GraphQL */ `
-  mutation DeletePost(
-    $input: DeletePostInput!
-    $condition: ModelPostConditionInput
-  ) {
-    deletePost(input: $input, condition: $condition) {
-      id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        posts {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
-      title
-      description
-      imagePath
-      likes
-      createdAt
-      updatedAt
-      userPostsId
     }
   }
 `;

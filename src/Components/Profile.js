@@ -5,12 +5,33 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BodyNarrow } from './Body.styles';
+import HikeForm from './HikeForm';
 
 
-function Profile() {
+const ProfileInfo = styled.div`
+  display: flex;
+`;
+
+const MyHikesWrapper = styled.div`
+  display: flex;
+  flex-direction: column; 
+`;
+
+function Profile( {username} ) {
+
+  
+
   return (
     <BodyNarrow>
-      <h1>profile</h1>
+
+      <ProfileInfo>
+
+      </ProfileInfo>
+
+      <MyHikesWrapper>
+        <HikeForm />
+      </MyHikesWrapper>
+
     </BodyNarrow>
   );
 };
