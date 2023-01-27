@@ -25,7 +25,7 @@ function Profile( {userId} ) {
     <BodyNarrow>
 
       <ProfileInfo>
-
+        <h1>{userId}</h1>
       </ProfileInfo>
 
       <MyHikesWrapper>

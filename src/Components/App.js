@@ -35,41 +35,47 @@ const AppWrapper = styled.div`
 
 function App( {signOut, user }) {
 
+  /**
+   * UserId for the current signed in user
+   */
   const [userId, setUserId] = useState(null);
 
+  /**
+   * Fetch and set userId
+   */
   useEffect(() => {
-    setUserId(fetchUserId(user));
-    console.log(userId)
+    async function fetchData() {
+      const id = await fetchUserId(user);
+      setUserId(id);
+    }
+    fetchData();
   }, []);
 
+
   /**
-   * Fetch the userId from Dynamo that corresponds with the user who signed in
+   * Fetch all users from the database and return the userId that is associated with the signed in user
+   * @param {*} user Current signed in user 
+   * @returns 
    */
   const fetchUserId = async (user) => {
     try {
-        const users = await API.graphql({
-          query: listUsers,
-          // authMode: 'AMAZON_COGNITO_USER_POOLS'
-        });
+      const users = await API.graphql({
+        query: listUsers,
+      });
 
-        let userFound = false;
-        users.data.listUsers.items.forEach(item => {
-          if (item.username == user.username) {
-            return item.id;
-            console.log(item.id);
-            userFound = true;
-          }
-        });
-
-        if (!userFound) {
-          // createNewUser(user.username)
-          console.log('user not found');
+      let userId = null;
+      users.data.listUsers.items.forEach(item => {
+        if (item.username == user.username) {
+          userId = item.id;
         }
+      });
+
+      return userId;
 
     } catch (error) {
-        console.log('error:', error)
+      console.log("Error while fetching userId: ", error);
     }
-  }
+  };
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
