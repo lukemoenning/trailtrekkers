@@ -8,8 +8,23 @@ export const getUser = /* GraphQL */ `
       username
       email
       hikes {
-        items {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
+      following {
+        id
+        username
+        email
+        hikes {
           id
+          userId
           title
           distance
           description
@@ -17,38 +32,58 @@ export const getUser = /* GraphQL */ `
           likes
           createdAt
           updatedAt
-          userHikesId
         }
-        nextToken
-      }
-      following {
-        items {
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       followers {
-        items {
+        id
+        username
+        email
+        hikes {
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
+        }
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      userFollowingId
-      userFollowersId
     }
   }
 `;
@@ -64,18 +99,32 @@ export const listUsers = /* GraphQL */ `
         username
         email
         hikes {
-          nextToken
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
         }
         following {
-          nextToken
+          id
+          username
+          email
+          createdAt
+          updatedAt
         }
         followers {
-          nextToken
+          id
+          username
+          email
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
-        userFollowingId
-        userFollowersId
       }
       nextToken
     }
@@ -85,24 +134,7 @@ export const getHike = /* GraphQL */ `
   query GetHike($id: ID!) {
     getHike(id: $id) {
       id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
+      userId
       title
       distance
       description
@@ -110,7 +142,6 @@ export const getHike = /* GraphQL */ `
       likes
       createdAt
       updatedAt
-      userHikesId
     }
   }
 `;
@@ -123,15 +154,7 @@ export const listHikes = /* GraphQL */ `
     listHikes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        user {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-          userFollowingId
-          userFollowersId
-        }
+        userId
         title
         distance
         description
@@ -139,7 +162,6 @@ export const listHikes = /* GraphQL */ `
         likes
         createdAt
         updatedAt
-        userHikesId
       }
       nextToken
     }

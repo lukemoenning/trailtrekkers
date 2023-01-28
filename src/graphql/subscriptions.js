@@ -8,8 +8,23 @@ export const onCreateUser = /* GraphQL */ `
       username
       email
       hikes {
-        items {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
+      following {
+        id
+        username
+        email
+        hikes {
           id
+          userId
           title
           distance
           description
@@ -17,38 +32,58 @@ export const onCreateUser = /* GraphQL */ `
           likes
           createdAt
           updatedAt
-          userHikesId
         }
-        nextToken
-      }
-      following {
-        items {
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       followers {
-        items {
+        id
+        username
+        email
+        hikes {
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
+        }
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      userFollowingId
-      userFollowersId
     }
   }
 `;
@@ -59,8 +94,23 @@ export const onUpdateUser = /* GraphQL */ `
       username
       email
       hikes {
-        items {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
+      following {
+        id
+        username
+        email
+        hikes {
           id
+          userId
           title
           distance
           description
@@ -68,38 +118,58 @@ export const onUpdateUser = /* GraphQL */ `
           likes
           createdAt
           updatedAt
-          userHikesId
         }
-        nextToken
-      }
-      following {
-        items {
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       followers {
-        items {
+        id
+        username
+        email
+        hikes {
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
+        }
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      userFollowingId
-      userFollowersId
     }
   }
 `;
@@ -110,8 +180,23 @@ export const onDeleteUser = /* GraphQL */ `
       username
       email
       hikes {
-        items {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
+      following {
+        id
+        username
+        email
+        hikes {
           id
+          userId
           title
           distance
           description
@@ -119,38 +204,58 @@ export const onDeleteUser = /* GraphQL */ `
           likes
           createdAt
           updatedAt
-          userHikesId
         }
-        nextToken
-      }
-      following {
-        items {
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       followers {
-        items {
+        id
+        username
+        email
+        hikes {
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
+        }
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      userFollowingId
-      userFollowersId
     }
   }
 `;
@@ -158,24 +263,7 @@ export const onCreateHike = /* GraphQL */ `
   subscription OnCreateHike($filter: ModelSubscriptionHikeFilterInput) {
     onCreateHike(filter: $filter) {
       id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
+      userId
       title
       distance
       description
@@ -183,7 +271,6 @@ export const onCreateHike = /* GraphQL */ `
       likes
       createdAt
       updatedAt
-      userHikesId
     }
   }
 `;
@@ -191,24 +278,7 @@ export const onUpdateHike = /* GraphQL */ `
   subscription OnUpdateHike($filter: ModelSubscriptionHikeFilterInput) {
     onUpdateHike(filter: $filter) {
       id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
+      userId
       title
       distance
       description
@@ -216,7 +286,6 @@ export const onUpdateHike = /* GraphQL */ `
       likes
       createdAt
       updatedAt
-      userHikesId
     }
   }
 `;
@@ -224,24 +293,7 @@ export const onDeleteHike = /* GraphQL */ `
   subscription OnDeleteHike($filter: ModelSubscriptionHikeFilterInput) {
     onDeleteHike(filter: $filter) {
       id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
+      userId
       title
       distance
       description
@@ -249,7 +301,6 @@ export const onDeleteHike = /* GraphQL */ `
       likes
       createdAt
       updatedAt
-      userHikesId
     }
   }
 `;

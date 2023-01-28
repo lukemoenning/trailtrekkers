@@ -11,8 +11,23 @@ export const createUser = /* GraphQL */ `
       username
       email
       hikes {
-        items {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
+      following {
+        id
+        username
+        email
+        hikes {
           id
+          userId
           title
           distance
           description
@@ -20,38 +35,58 @@ export const createUser = /* GraphQL */ `
           likes
           createdAt
           updatedAt
-          userHikesId
         }
-        nextToken
-      }
-      following {
-        items {
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       followers {
-        items {
+        id
+        username
+        email
+        hikes {
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
+        }
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      userFollowingId
-      userFollowersId
     }
   }
 `;
@@ -65,8 +100,23 @@ export const updateUser = /* GraphQL */ `
       username
       email
       hikes {
-        items {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
+      following {
+        id
+        username
+        email
+        hikes {
           id
+          userId
           title
           distance
           description
@@ -74,38 +124,58 @@ export const updateUser = /* GraphQL */ `
           likes
           createdAt
           updatedAt
-          userHikesId
         }
-        nextToken
-      }
-      following {
-        items {
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       followers {
-        items {
+        id
+        username
+        email
+        hikes {
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
+        }
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      userFollowingId
-      userFollowersId
     }
   }
 `;
@@ -119,8 +189,23 @@ export const deleteUser = /* GraphQL */ `
       username
       email
       hikes {
-        items {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
+      following {
+        id
+        username
+        email
+        hikes {
           id
+          userId
           title
           distance
           description
@@ -128,38 +213,58 @@ export const deleteUser = /* GraphQL */ `
           likes
           createdAt
           updatedAt
-          userHikesId
         }
-        nextToken
-      }
-      following {
-        items {
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       followers {
-        items {
+        id
+        username
+        email
+        hikes {
+          id
+          userId
+          title
+          distance
+          description
+          imagePath
+          likes
+          createdAt
+          updatedAt
+        }
+        following {
           id
           username
           email
           createdAt
           updatedAt
-          userFollowingId
-          userFollowersId
         }
-        nextToken
+        followers {
+          id
+          username
+          email
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
-      userFollowingId
-      userFollowersId
     }
   }
 `;
@@ -170,24 +275,7 @@ export const createHike = /* GraphQL */ `
   ) {
     createHike(input: $input, condition: $condition) {
       id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
+      userId
       title
       distance
       description
@@ -195,7 +283,6 @@ export const createHike = /* GraphQL */ `
       likes
       createdAt
       updatedAt
-      userHikesId
     }
   }
 `;
@@ -206,24 +293,7 @@ export const updateHike = /* GraphQL */ `
   ) {
     updateHike(input: $input, condition: $condition) {
       id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
+      userId
       title
       distance
       description
@@ -231,7 +301,6 @@ export const updateHike = /* GraphQL */ `
       likes
       createdAt
       updatedAt
-      userHikesId
     }
   }
 `;
@@ -242,24 +311,7 @@ export const deleteHike = /* GraphQL */ `
   ) {
     deleteHike(input: $input, condition: $condition) {
       id
-      user {
-        id
-        username
-        email
-        hikes {
-          nextToken
-        }
-        following {
-          nextToken
-        }
-        followers {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        userFollowingId
-        userFollowersId
-      }
+      userId
       title
       distance
       description
@@ -267,7 +319,6 @@ export const deleteHike = /* GraphQL */ `
       likes
       createdAt
       updatedAt
-      userHikesId
     }
   }
 `;

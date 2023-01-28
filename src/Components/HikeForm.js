@@ -3,12 +3,11 @@
  */
 
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { View, TextAreaField, Button } from '@aws-amplify/ui-react';
 import { API } from 'aws-amplify';
 import { createHike } from '../graphql/mutations';
-import { getUser } from '../graphql/queries';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -34,22 +33,27 @@ const SubmitButton = styled.button`
 `;
 
 function HikeForm({ userId }) {
-  const [hike, setHike] = useState({ id: '', user: '5', title: '', distance: '', description: '', imagePath: '', likes: 0});
+  const [hike, setHike] = useState({ 
+    id: uuidv4(),
+    userId: '', 
+    title: '', 
+    distance: '', 
+    description: '', 
+    imagePath: 'my/path', 
+    likes: '15'
+  });
+
+  useEffect(() => {
+    // console.log(hike)
+  }, [hike.id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Create a unique id for the hike
-    setHike({ ...hike, id: uuidv4()})
-
-    // Set the user the hike is associated with
-    setHike({ ...hike, user: await API.graphql({
-      query: getUser,
-      variables: {
-        input: userId
-      },
-    })})
-
+    const id = uuidv4();
+    setHike({ ...hike, id: id, userId: userId });
+    // console.log(userId)
+    console.log(hike)
+    // console.log(hike.userId)
     const postHike = await API.graphql({
       query: createHike,
       variables: {
@@ -60,14 +64,8 @@ function HikeForm({ userId }) {
     ).catch(
       error => {console.log('Error: ', error)}
     )
+}
 
-    // try {
-    //   // Add code to send hike data to backend here
-    //   console.log(hike);
-    // } catch (err) {
-    //   console.log('Error submitting form', err);
-    // }
-  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;

@@ -7,17 +7,17 @@ type User @model @auth(rules: [{ allow: private }]) {
   id: String!
   username: String!
   email: String!
-  hikes: [Hike] @hasMany
-  following: [User] @hasMany
-  followers: [User] @hasMany
+  hikes: [Hike] 
+  following: [User]
+  followers: [User] 
 }
 
 type Hike @model @auth(rules: [{ allow: private }]) {
   id: String!
-  user: User! @belongsTo
+  userId: String! 
   title: String!
-  distance: Int!
+  distance: String!
   description: String!
   imagePath: String!
-  likes: Int!
+  likes: String!
 }
