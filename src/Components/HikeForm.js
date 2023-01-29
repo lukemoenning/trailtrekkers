@@ -13,6 +13,18 @@ import { palette, styles } from './assets/constants';
 import { Close, Upload } from '@mui/icons-material';
 
 
+const BlurBackground = styled.div`
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const HikeFormWrapper = styled.form`
   display: flex;
   justify-content: space-between;
@@ -21,8 +33,7 @@ const HikeFormWrapper = styled.form`
   max-width:900px;
   height: 75vh;
   max-height: 700px;
-  ${'' /* background: ${palette.WHITE}; */}
-  background: tan;
+  background: ${palette.WHITE};
   border-radius: ${styles.BORDER_RADIUS};
   position: absolute;
   top: 50%;
@@ -74,23 +85,21 @@ const SubmitButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 0.7;
     transform: scale(1.1, 1.1);
   }
 `;
 
 const CloseButton = styled(Close)`
-  height: 30px;
-  width: 30px;
   position: absolute;
   color: ${palette.BROWN};
-  top: 3%;
-  right: 3%;
+  top: 5%;
+  right: 5%;
   transition: 300ms;
 
   &:hover {
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 0.7;
     transform: scale(1.1, 1.1);
   }
 `;
@@ -132,52 +141,55 @@ function HikeForm({ userId }) {
   }
 
   return (
-    <HikeFormWrapper onSubmit={handleSubmit}>
+    <BlurBackground>
+      <HikeFormWrapper onSubmit={handleSubmit}>
 
-      {/* HIKE PICTURE */}
-      <HikeFormPhotoWrapper>
-        <Upload />
-      </HikeFormPhotoWrapper>
+        {/* HIKE PICTURE */}
+        <HikeFormPhotoWrapper>
+          <Upload />
+        </HikeFormPhotoWrapper>
 
-      {/* INFORMATION ABOUT THE HIKE */}
-      <HikeFormInfoWrapper>
+        {/* INFORMATION ABOUT THE HIKE */}
+        <HikeFormInfoWrapper>
 
-        <TitleAndDistance>
-          <View label="Title">
+          <TitleAndDistance>
+            <View label="Title">
+              <TextAreaField
+                name="title"
+                value={hike.title}
+                onChange={handleChange}
+                placeholder="Title"
+              />
+            </View>
+            <View label="Distance">
+              <TextAreaField
+                name="distance"
+                value={hike.distance}
+                onChange={handleChange}
+                placeholder="Distance"
+              />
+            </View>
+          </TitleAndDistance>
+
+          <View label="Description">
             <TextAreaField
-              name="title"
-              value={hike.title}
+              name="description"
+              value={hike.description}
               onChange={handleChange}
-              placeholder="Title"
+              placeholder="Description"
             />
           </View>
-          <View label="Distance">
-            <TextAreaField
-              name="distance"
-              value={hike.distance}
-              onChange={handleChange}
-              placeholder="Distance"
-            />
-          </View>
-        </TitleAndDistance>
+        </HikeFormInfoWrapper>
 
-        <View label="Description">
-          <TextAreaField
-            name="description"
-            value={hike.description}
-            onChange={handleChange}
-            placeholder="Description"
-          />
-        </View>
-      </HikeFormInfoWrapper>
+        {/* SUBMIT BUTTON */}
+        <SubmitButton type="submit">Post</SubmitButton>
 
-      {/* SUBMIT BUTTON */}
-      <SubmitButton type="submit">Post</SubmitButton>
+      </HikeFormWrapper>
 
       {/* CLOSE BUTTON */}
-      <CloseButton />
+      <CloseButton fontSize='large'/>
 
-    </HikeFormWrapper>
+    </BlurBackground>
   );
 }
 

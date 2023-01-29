@@ -2,7 +2,7 @@
  * Profile component
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BodyNarrow } from './Body.styles';
 import { palette, styles } from './assets/constants';
@@ -59,9 +59,31 @@ const ProfileHorizontalLine = styled.hr`
 const MyHikesWrapper = styled.div`
   display: flex;
   flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  outline: 1px solid red;
+`;
+
+const NewHikeButton = styled.button`
+  border: none; 
+  background: none;
+  color: ${palette.BROWN};
+  border-radius: ${styles.BORDER_RADIUS};
+  transition: 300ms;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
 `;
 
 function Profile( {userId} ) {
+
+  /**
+   * Whether to display a new HikeForm or not. Defaults to not display.
+   */
+  const [displayNewHike, setDisplayNewHike] = useState(false);
 
   /**
    * Retrieve the user information on reload
@@ -97,7 +119,8 @@ function Profile( {userId} ) {
 
       {/* USER HIKES */}
       <MyHikesWrapper>
-        {/* <HikeForm userId={userId}/> */}
+        <NewHikeButton onClick={() => {setDisplayNewHike(!displayNewHike)}}>Share a hike</NewHikeButton>
+        {displayNewHike && <HikeForm userId={userId}/>}
       </MyHikesWrapper>
 
     </BodyNarrow>
