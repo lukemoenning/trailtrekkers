@@ -4,11 +4,12 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import { Loader } from '@aws-amplify/ui-react';
 
 
 function Loading() {
   return (
-    <div>Loading</div>
+    <Loader />
   );
 };
 

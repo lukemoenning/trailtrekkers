@@ -29,7 +29,7 @@ function Profile( {userId} ) {
       </ProfileInfo>
 
       <MyHikesWrapper>
-        <HikeForm userId={userId}/>
+        {/* <HikeForm userId={userId}/> */}
       </MyHikesWrapper>
 
     </BodyNarrow>

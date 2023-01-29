@@ -2,7 +2,7 @@
  * Wrapper styled components for the body content
  */
 import styled from 'styled-components';
-import { palette, media, nav } from './assets/constants';
+import { palette, styles } from './assets/constants';
 
 
 export const BodyNarrow = styled.div`
@@ -12,8 +12,8 @@ export const BodyNarrow = styled.div`
   max-width: 600px;
   background: ${palette.WHITE};
 
-  @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
-    margin-top: ${nav.MOBILE_HEIGHT};
+  @media (max-width: ${styles.DESKTOP_MIN_WIDTH}) {
+    margin-top: ${styles.MOBILE_HEIGHT};
   }
 `;
 

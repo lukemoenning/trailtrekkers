@@ -19,19 +19,14 @@ export const palette = {
 
 
 /**
- * Constants for handling different media
+ * Constants for handling different styling aspects
  */
-export const media = {
+export const styles = {
   "DESKTOP_MIN_WIDTH": "700px",
-};
-
-
-/**
- * Navbar constants
- */
-export const nav = {
   "DESKTOP_WIDTH": "200px",
   "DESKTOP_HEIGHT": "100vh",
   "MOBILE_WIDTH": "100vw",
   "MOBILE_HEIGHT": "80px",
+  "BORDER_RADIUS": "12px",
 };
+

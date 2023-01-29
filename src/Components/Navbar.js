@@ -5,7 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { palette, media, nav } from './assets/constants';
+import { palette, styles } from './assets/constants';
 import { Home, Groups, Explore, Map, AccountCircle, ExitToApp } from '@mui/icons-material';
 import NavbarItem from './NavbarItem';
 import { ReactComponent as Logo } from './assets/images/trailtrekkers-logo.svg';
@@ -18,21 +18,21 @@ const NavWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: ${nav.DESKTOP_HEIGHT};
-  width: ${nav.DESKTOP_WIDTH};
+  height: ${styles.DESKTOP_HEIGHT};
+  width: ${styles.DESKTOP_WIDTH};
   background: ${palette.DARK_GREEN};
 
-  @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
+  @media (max-width: ${styles.DESKTOP_MIN_WIDTH}) {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    height: ${nav.MOBILE_HEIGHT};
-    width: ${nav.MOBILE_WIDTH};
+    height: ${styles.MOBILE_HEIGHT};
+    width: ${styles.MOBILE_WIDTH};
   }
 `;
 
 const NavLinksWrapper = styled.div`
-  @media (max-width: ${media.DESKTOP_MIN_WIDTH}) {
+  @media (max-width: ${styles.DESKTOP_MIN_WIDTH}) {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -55,7 +55,7 @@ function Navbar( {signOut }) {
    * @returns {boolean} if the current window size is greater than the minimum desktop size
    */
   const isDesktop = () => {
-    const desktopMinWidth = media.DESKTOP_MIN_WIDTH.slice(0, -2);
+    const desktopMinWidth = styles.DESKTOP_MIN_WIDTH.slice(0, -2);
     return width > new Number(desktopMinWidth);
   }
 
