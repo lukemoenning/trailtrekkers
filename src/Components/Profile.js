@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { BodyNarrow } from './Body.styles';
 import { palette, styles } from './assets/constants';
 import HikeForm from './HikeForm';
-import { BlankProfile } from './assets/images/blank-profile-picture.png';
 
 
 const ProfileHeader = styled.div`
