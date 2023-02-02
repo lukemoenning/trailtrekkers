@@ -7,9 +7,10 @@ import styled from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
 import config from '../aws-exports';
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import { Authenticator, withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { palette, styles } from './assets/constants';
+import { authenticatorComponents, authenticatorFormFields } from './Authenticator.styles';
 import Navbar from './Navbar';
 import Home from './Home';
 import Friends from './Friends';
@@ -80,24 +81,35 @@ function App( {signOut, user }) {
   // };
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <AppWrapper>
+    <Authenticator 
+      formFields={authenticatorFormFields} 
+      components={authenticatorComponents}
+      loginMechanisms={['username']}
+    > 
 
-        {/* NAVBAR */}
-        <Navbar signOut={signOut} />
+      {({ signOut}) => 
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <AppWrapper>
 
-        {/* BODY CONTENT */}
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/friends' element={<Friends />} />
-          <Route path='/discover' element={<Discover />} />
-          <Route path='/map' element={<Map />} />
-          <Route path='/profile' element={<Profile userId={userId}/>} />
-        </Routes>
+            {/* NAVBAR */}
+            <Navbar signOut={signOut} />
 
-      </AppWrapper>
-    </BrowserRouter>
+            {/* BODY CONTENT */}
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/friends' element={<Friends />} />
+              <Route path='/discover' element={<Discover />} />
+              <Route path='/map' element={<Map />} />
+              <Route path='/profile' element={<Profile userId={userId}/>} />
+            </Routes>
+
+          </AppWrapper>
+        </BrowserRouter>
+      }
+
+    </Authenticator>
   );
 };
 
-export default withAuthenticator(App);
+// export default withAuthenticator(App);
+export default App;
