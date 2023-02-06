@@ -2,7 +2,7 @@
  * App component
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Amplify, API, graphqlOperation } from 'aws-amplify';
@@ -18,6 +18,7 @@ import Discover from './Discover';
 import Map from './Map';
 import Profile from './Profile';
 import { listUsers } from '../graphql/queries';
+import UserContext from '../UserContext';
 
 
 Amplify.configure(config);
@@ -36,12 +37,10 @@ const AppWrapper = styled.div`
 
 function App( {signOut, user }) {
 
-  /**
-   * UserId for the current signed in user
-   */
-  const [userId, setUserId] = useState('be9d531a-84b8-4611-b356-f22a472b2737'); // SHOULD BE SET TO NULL
-
-// COMMENTED OUT FOR DEVELOPMENT PURPOSES
+  
+  // COMMENTED OUT FOR DEVELOPMENT PURPOSES
+  // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+  // const { setUserId } = useContext(UserContext);
 
   // /**
   //  * Fetch and set userId
@@ -67,7 +66,7 @@ function App( {signOut, user }) {
   //     });
 
   //     let userId = null;
-  //     users.data.listUsers.items.forEach(item => {
+  //     users?.data?.listUsers?.items?.forEach(item => {
   //       if (item.username == user.username) {
   //         userId = item.id;
   //       }
@@ -79,15 +78,17 @@ function App( {signOut, user }) {
   //     console.log("Error while fetching userId: ", error);
   //   }
   // };
+  // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+  
 
   return (
-    <Authenticator 
-      formFields={authenticatorFormFields} 
-      components={authenticatorComponents}
-      loginMechanisms={['username']}
-    > 
+    // <Authenticator // Custom login UI
+    //   formFields={authenticatorFormFields} // Custom login UI
+    //   components={authenticatorComponents} // Custom login UI
+    //   loginMechanisms={['username']} // Custom login UI
+    // > // Custom login UI
 
-      {({ signOut}) => 
+      // {({ signOut}) => // Custom login UI
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <AppWrapper>
 
@@ -100,16 +101,16 @@ function App( {signOut, user }) {
               <Route path='/friends' element={<Friends />} />
               <Route path='/discover' element={<Discover />} />
               <Route path='/map' element={<Map />} />
-              <Route path='/profile' element={<Profile userId={userId}/>} />
+              <Route path='/profile' element={<Profile />} />
             </Routes>
 
           </AppWrapper>
         </BrowserRouter>
-      }
+      // } // Custom login UI
 
-    </Authenticator>
+    // </Authenticator> // Custom login UI
   );
 };
 
-// export default withAuthenticator(App);
-export default App;
+export default withAuthenticator(App);
+// export default App; // Custom login UI

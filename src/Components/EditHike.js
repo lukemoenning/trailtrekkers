@@ -25,7 +25,7 @@ const BlurBackground = styled.div`
   justify-content: center;
 `;
 
-const HikeFormWrapper = styled.form`
+const EditHikeWrapper = styled.form`
   display: flex;
   justify-content: space-between;
   padding: 20px;
@@ -41,7 +41,7 @@ const HikeFormWrapper = styled.form`
   transform: translate(-50%, -50%);
 `;
 
-const HikeFormPhotoWrapper = styled.div`
+const EditHikePhotoWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,7 +51,7 @@ const HikeFormPhotoWrapper = styled.div`
   outline: 1px solid red;
 `;
 
-const HikeFormInfoWrapper = styled.div`
+const EditHikeInfoWrapper = styled.div`
   display: flex; 
   flex-direction: column;
   width: 50%;
@@ -104,7 +104,7 @@ const CloseButton = styled(Close)`
   }
 `;
 
-function HikeForm({ userId }) {
+function EditHike({ handleClose }) {
   const [hike, setHike] = useState({ 
     id: uuidv4(),
     userId: '', 
@@ -142,15 +142,15 @@ function HikeForm({ userId }) {
 
   return (
     <BlurBackground>
-      <HikeFormWrapper onSubmit={handleSubmit}>
+      <EditHikeWrapper onSubmit={handleSubmit}>
 
         {/* HIKE PICTURE */}
-        <HikeFormPhotoWrapper>
+        <EditHikePhotoWrapper>
           <Upload />
-        </HikeFormPhotoWrapper>
+        </EditHikePhotoWrapper>
 
         {/* INFORMATION ABOUT THE HIKE */}
-        <HikeFormInfoWrapper>
+        <EditHikeInfoWrapper>
 
           <TitleAndDistance>
             <View label="Title">
@@ -179,12 +179,12 @@ function HikeForm({ userId }) {
               placeholder="Description"
             />
           </View>
-        </HikeFormInfoWrapper>
+        </EditHikeInfoWrapper>
 
         {/* SUBMIT BUTTON */}
         <SubmitButton type="submit">Post</SubmitButton>
 
-      </HikeFormWrapper>
+      </EditHikeWrapper>
 
       {/* CLOSE BUTTON */}
       <CloseButton fontSize='large'/>
@@ -193,4 +193,4 @@ function HikeForm({ userId }) {
   );
 }
 
-export default HikeForm;
+export default EditHike;
