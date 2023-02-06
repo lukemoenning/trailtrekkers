@@ -3,7 +3,7 @@
  */
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { View, TextAreaField, Button } from '@aws-amplify/ui-react';
 import { API } from 'aws-amplify';
@@ -11,6 +11,7 @@ import { createHike } from '../graphql/mutations';
 import { v4 as uuidv4 } from 'uuid';
 import { palette, styles } from './assets/constants';
 import { Close, Upload } from '@mui/icons-material';
+import UserContext from '../UserContext';
 
 
 const BlurBackground = styled.div`
@@ -105,6 +106,10 @@ const CloseButton = styled(Close)`
 `;
 
 function EditHike({ handleClose }) {
+
+  /**
+   * The information that correlates to the current hike displayed
+   */
   const [hike, setHike] = useState({ 
     id: uuidv4(),
     userId: '', 
@@ -115,26 +120,37 @@ function EditHike({ handleClose }) {
     likes: '15'
   });
 
+  /**
+   * State management pulled from UserContext
+   */
+  const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
+
+  /**
+   * Set a UUID and userId for the hike, then post it to the Hike Table in Dynamo
+   * @param {*} event EditForm submit event
+   */
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // const id = uuidv4();
-    // setHike({ ...hike, id: id, userId: userId });
-    // // console.log(userId)
-    // console.log(hike)
-    // // console.log(hike.userId)
-    // const postHike = await API.graphql({
-    //   query: createHike,
-    //   variables: {
-    //     input: hike
-    //   },
-    // }).then(
-    //   console.log('Hike successfully placed in database')
-    // ).catch(
-    //   error => {console.log('Error: ', error)}
-    // )
-}
+    event.preventDefault();
+    const id = uuidv4(); // Generate a UUID
+    setHike({ ...hike, [id]: id}); // Set the UUID and userId of the hike
+    setHike({ ...hike, [userId]: userId }); // Set the UUID and userId of the hike
+    const postHike = await API.graphql({ // Post the hike in the Hike Table
+      query: createHike,
+      variables: {
+        input: hike
+      },
+    }).then(
+      console.log('Hike successfully placed in database'),
+      changeEditHikeDisplay(false) // Set the display of the EditHike form to false
+    ).catch(
+      error => {console.log('Error: ', error)}
+    )
+  }
 
-
+  /**
+   * Update the text displayed in the input fields of the form on change
+   * @param {*} event change to the input fields
+   */
   const handleChange = (event) => {
     const { name, value } = event.target;
     setHike({ ...hike, [name]: value });
@@ -187,7 +203,7 @@ function EditHike({ handleClose }) {
       </EditHikeWrapper>
 
       {/* CLOSE BUTTON */}
-      <CloseButton fontSize='large'/>
+      <CloseButton onClick={() => changeEditHikeDisplay(false)} fontSize='large'/>
 
     </BlurBackground>
   );

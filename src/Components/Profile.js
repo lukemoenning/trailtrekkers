@@ -81,14 +81,9 @@ const NewHikeButton = styled.button`
 function Profile() {
 
   /**
-   * Whether to display a new HikeForm or not. Defaults to not display.
+   * State management pulled from UserContext
    */
-  const [displayNewHike, setDisplayNewHike] = useState(false);
-
-  /**
-   * User ID of the signed in user
-   */
-  const { userId } = useContext(UserContext);
+  const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
 
   return (
     <BodyNarrow>
@@ -117,8 +112,8 @@ function Profile() {
 
       {/* USER HIKES */}
       <MyHikesWrapper>
-        <NewHikeButton onClick={() => {setDisplayNewHike(true)}}>Share a hike</NewHikeButton>
-        {displayNewHike && <EditHike />}
+        <NewHikeButton onClick={() => {changeEditHikeDisplay(true)}}>Share a hike</NewHikeButton>
+        {editHikeInfo.display && <EditHike />}
       </MyHikesWrapper>
 
     </BodyNarrow>
