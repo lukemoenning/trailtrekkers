@@ -13,7 +13,7 @@ import { palette, styles } from './assets/constants';
 import { authenticatorComponents, authenticatorFormFields } from './Authenticator.styles';
 import Navbar from './Navbar';
 import Home from './Home';
-import Friends from './Friends';
+import Friends from './Discover';
 import Discover from './Discover';
 import Map from './Map';
 import Profile from './Profile';
@@ -122,9 +122,8 @@ function App( {signOut, user }) {
             {/* BODY CONTENT */}
             <Routes>
               <Route path='/' element={(userInfo && userHikes) ? <Home /> : <Loading />} /> // Only render Home component if user info and user hikes are available
-              <Route path='/friends' element={<Friends />} />
               <Route path='/discover' element={<Discover />} />
-              <Route path='/map' element={<Map />} />
+              {/* <Route path='/map' element={<Map />} /> */}
               <Route path='/profile' element={<Profile />} />
             </Routes>
 

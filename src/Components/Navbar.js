@@ -84,9 +84,8 @@ function Navbar( {signOut }) {
         {isDesktop() && <Link to='/'><NavLogo height={'50px'} width={'160px'}/></Link>}
 
         <Link to='/'><NavbarItem title={'Home'} Icon={Home} isDesktop={isDesktop()}></NavbarItem></Link>
-        <Link to='/friends'><NavbarItem title={'Friends'} Icon={Groups} isDesktop={isDesktop()}></NavbarItem></Link>
-        <Link to='/discover'><NavbarItem title={'Discover'} Icon={Explore} isDesktop={isDesktop()}></NavbarItem></Link>
-        <Link to='/map'><NavbarItem title={'Map'} Icon={Map} isDesktop={isDesktop()}></NavbarItem></Link>
+        <Link to='/discover'><NavbarItem title={'Discover'} Icon={Groups} isDesktop={isDesktop()}></NavbarItem></Link>
+        {/* <Link to='/map'><NavbarItem title={'Map'} Icon={Map} isDesktop={isDesktop()}></NavbarItem></Link> */}
         <Link to='/profile'><NavbarItem title={'Profile'} Icon={AccountCircle} isDesktop={isDesktop()}></NavbarItem></Link>
       </NavLinksWrapper>
 

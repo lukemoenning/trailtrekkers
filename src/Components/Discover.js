@@ -2,16 +2,54 @@
  * Discover component
  */
 
-import React from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
-import { BodyWide } from './Body.styles';
+import { BodyNarrow } from './Body.styles';
+import HikeCard from './HikeCard';
+import { listHikes } from '../graphql/queries';
+import { API } from 'aws-amplify';
+import Loading from './Loading';
 
 
 function Discover() {
+
+  /**
+   * @type {Array} Array of all hikes
+   */
+  const [hikes, setHikes] = useState([]);
+
+  /**
+   * Fetches all hikes from the database
+   */
+  useEffect(() => {
+    async function fetchData() {
+      const hikes = await fetchHikes();
+      setHikes(hikes);
+    }
+    fetchData();
+  }, []);
+
+  /**
+   * @returns {Array} Array of all hikes
+   */
+  const fetchHikes = async () => {
+    try {
+      const hikes = await API.graphql({
+        query: listHikes,
+      });
+      return hikes.data.listHikes.items;
+    } catch (error) {
+      console.log('error fetching user hikes: ', error);
+    }
+  }
+    
+
   return (
-    <BodyWide>
-      <h1>discover</h1>
-    </BodyWide>
+    <BodyNarrow>
+      {hikes ? (hikes?.map((hike) => {
+        return <HikeCard key={hike.id+'discover'} hike={hike} />
+      })) : <Loading />}
+    </BodyNarrow>
   );
 };
 
