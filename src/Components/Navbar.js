@@ -15,7 +15,7 @@ const NavWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: ${styles.DESKTOP_HEIGHT};

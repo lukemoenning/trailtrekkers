@@ -8,6 +8,9 @@ import { BodyNarrow } from './Body.styles';
 import { palette, styles } from './assets/constants';
 import EditHike from './EditHike';
 import UserContext from '../UserContext';
+import { listHikes } from '../graphql/queries';
+import { API } from 'aws-amplify';
+import HikeCard from './HikeCard';
 
 
 const ProfileHeader = styled.div`
@@ -85,6 +88,36 @@ function Profile() {
    */
   const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
 
+  const [userHikes, setUserHikes] = useState([]);
+
+  /**
+   * Fetch user hikes from database on page load
+   */
+  useEffect(() => {
+    async function fetchData() {
+      const hikes = await fetchUserHikes();
+      setUserHikes(hikes);
+    }
+    fetchData();
+  }, []);
+
+  /**
+   * @returns {Array} Array of hikes belonging to the user
+   */
+  const fetchUserHikes = async () => {
+    try {
+      const hikes = await API.graphql({
+        query: listHikes,
+        variables: { 
+          filter: { userId: { eq: userId } } 
+        }
+      });
+      return hikes.data.listHikes.items
+    } catch (error) {
+      console.log('error fetching user hikes: ', error);
+    }
+  }
+
   return (
     <BodyNarrow>
 
@@ -114,6 +147,12 @@ function Profile() {
       <MyHikesWrapper>
         <NewHikeButton onClick={() => {changeEditHikeDisplay(true)}}>Share a hike</NewHikeButton>
         {editHikeInfo.display && <EditHike />}
+
+        {/* MAP THROUGH USER HIKES IF THEY EXIST AND CREATE A HIKECARD FOR EACH */}
+        {userHikes && userHikes.map(hike => {
+          return <HikeCard key={hike.id} hike={hike} />
+        })}
+
       </MyHikesWrapper>
 
     </BodyNarrow>
