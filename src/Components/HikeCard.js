@@ -2,9 +2,10 @@
  * Card for displaying information about a hike
  */
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { palette, styles } from './assets/constants';
+import UserContext from '../UserContext';
 
 
 const HikeCardWrapper = styled.div`
@@ -25,9 +26,20 @@ const HikeCardPhoto = styled.div`
 `;
 
 function HikeCard({ hike }) {
+
+  /**
+   * State management pulled from UserContext
+   */
+  const {userInfo} = useContext(UserContext);
+
   return (
     <HikeCardWrapper>
+
       <HikeCardPhoto />
+
+      {/* IF THE HIKE BELONGS TO THE SIGNED IN USER, DON'T DISPLAY THE USERNAME */}
+      {hike.userId!=userInfo.userId && <h1>{hike.username}</h1>} 
+
       <h1>{hike.title}</h1>
       <h2>{hike.distance}</h2>
       <p>{hike.description}</p>

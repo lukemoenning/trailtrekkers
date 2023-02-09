@@ -9,10 +9,16 @@ import HikeCard from './HikeCard';
 import { listHikes } from '../graphql/queries';
 import { API } from 'aws-amplify';
 import Loading from './Loading';
+import UserContext from '../UserContext';
 
 
 function Discover() {
 
+  /**
+   * State management pulled from UserContext
+   */
+  const {userInfo} = useContext(UserContext);
+  
   /**
    * @type {Array} Array of all hikes
    */
@@ -36,13 +42,16 @@ function Discover() {
     try {
       const hikes = await API.graphql({
         query: listHikes,
+        variables: {
+          filter: { userId: { ne: userInfo.userId } }
+        } 
       });
       return hikes.data.listHikes.items;
     } catch (error) {
       console.log('error fetching user hikes: ', error);
     }
   }
-    
+  
 
   return (
     <BodyNarrow>
