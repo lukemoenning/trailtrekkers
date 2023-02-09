@@ -41,6 +41,7 @@ export const getHike = /* GraphQL */ `
     getHike(id: $id) {
       id
       userId
+      username
       title
       distance
       description
@@ -61,6 +62,7 @@ export const listHikes = /* GraphQL */ `
       items {
         id
         userId
+        username
         title
         distance
         description

@@ -111,14 +111,15 @@ function EditHike() {
   /**
    * State management pulled from UserContext
    */
-  const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
+  const { userInfo, changeEditHikeDisplay } = useContext(UserContext);
 
   /**
    * The information that correlates to the current hike displayed
    */
   const [hike, setHike] = useState({ 
     id: uuidv4(),
-    userId: userId, 
+    userId: userInfo.userId, 
+    username: userInfo.username,
     title: '', 
     distance: '', 
     description: '', 
@@ -158,7 +159,7 @@ function EditHike() {
       query: updateUser,
       variables: {
         input: {
-          id: userId,
+          id: userInfo.userId,
           hikes: hike.id
         }
       }

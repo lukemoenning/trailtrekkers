@@ -15,6 +15,7 @@ type User @model @auth(rules: [{ allow: private }]) {
 type Hike @model @auth(rules: [{ allow: private }]) {
   id: String!
   userId: String! 
+  username: String!
   title: String!
   distance: String!
   description: String!

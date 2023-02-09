@@ -40,44 +40,47 @@ function App( {signOut, user }) {
   
   // COMMENTED OUT FOR DEVELOPMENT PURPOSES
   // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
-  // const { setUserId } = useContext(UserContext);
+  const { setUserInfo } = useContext(UserContext);
 
-  // /**
-  //  * Fetch and set userId
-  //  */
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const id = await fetchUserId(user);
-  //     setUserId(id);
-  //   }
-  //   fetchData();
-  // }, []);
+  /**
+   * Fetch and set user info when the app loads
+   */
+  useEffect(() => {
+    async function fetchData() {
+      const info = await fetchUserInfo(user);
+      setUserInfo(info);
+    }
+    fetchData();
+  }, []);
 
 
-  // /**
-  //  * Fetch all users from the database and return the userId that is associated with the signed in user
-  //  * @param {*} user Current signed in user 
-  //  * @returns 
-  //  */
-  // const fetchUserId = async (user) => {
-  //   try {
-  //     const users = await API.graphql({
-  //       query: listUsers,
-  //     });
+  /**
+   * Fetch all users from the database and return the userInfo that is associated with the signed in user
+   * @param {*} user Current signed in user 
+   * @returns 
+   */
+  const fetchUserInfo = async (user) => {
+    try {
+      const users = await API.graphql({
+        query: listUsers,
+      });
 
-  //     let userId = null;
-  //     users?.data?.listUsers?.items?.forEach(item => {
-  //       if (item.username == user.username) {
-  //         userId = item.id;
-  //       }
-  //     });
+      let userId = null;
+      users?.data?.listUsers?.items?.forEach(item => {
+        if (item.username == user.username) {
+          userId = item.id;
+        }
+      });
 
-  //     return userId;
+      return {
+        userId: userId,
+        username: user.username,
+      }
 
-  //   } catch (error) {
-  //     console.log("Error while fetching userId: ", error);
-  //   }
-  // };
+    } catch (error) {
+      console.log("Error while fetching userId: ", error);
+    }
+  };
   // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
   
 

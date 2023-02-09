@@ -10,9 +10,12 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
 
   /**
-   * User ID of the current signed in user
+   * User ID and Username of the current signed in user
    */
-  const [userId, setUserId] = useState('d68a4d63-8f7b-47a7-99d0-7e56d908f6ef'); // SHOULD BE SET TO NULL
+  const [userInfo, setUserInfo] = useState({
+    userId: null,
+    username: null,
+  }); // SHOULD BE SET TO NULL
 
 
   /**
@@ -42,8 +45,8 @@ export function UserProvider({ children }) {
 
   return (
     <UserContext.Provider value={{ 
-      userId, 
-      setUserId,
+      userInfo,  
+      setUserInfo,
       editHikeInfo,
       changeEditHike,
       changeEditHikeDisplay, 

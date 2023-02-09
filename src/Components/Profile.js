@@ -86,7 +86,7 @@ function Profile() {
   /**
    * State management pulled from UserContext
    */
-  const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
+  const { userInfo, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
 
   const [userHikes, setUserHikes] = useState([]);
 
@@ -109,7 +109,7 @@ function Profile() {
       const hikes = await API.graphql({
         query: listHikes,
         variables: { 
-          filter: { userId: { eq: userId } } 
+          filter: { userId: { eq: userInfo.userId } } 
         }
       });
       return hikes.data.listHikes.items
@@ -129,7 +129,7 @@ function Profile() {
 
         {/* USER INFORMATION */}
         <ProfileInfo>
-          <ProfileUsername>username</ProfileUsername>
+          <ProfileUsername>{userInfo.username}</ProfileUsername>
 
           <ProfileStatsWrapper>
             <ProfileStat>0 hikes</ProfileStat>

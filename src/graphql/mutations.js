@@ -60,6 +60,7 @@ export const createHike = /* GraphQL */ `
     createHike(input: $input, condition: $condition) {
       id
       userId
+      username
       title
       distance
       description
@@ -78,6 +79,7 @@ export const updateHike = /* GraphQL */ `
     updateHike(input: $input, condition: $condition) {
       id
       userId
+      username
       title
       distance
       description
@@ -96,6 +98,7 @@ export const deleteHike = /* GraphQL */ `
     deleteHike(input: $input, condition: $condition) {
       id
       userId
+      username
       title
       distance
       description

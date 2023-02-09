@@ -48,6 +48,7 @@ export const onCreateHike = /* GraphQL */ `
     onCreateHike(filter: $filter) {
       id
       userId
+      username
       title
       distance
       description
@@ -63,6 +64,7 @@ export const onUpdateHike = /* GraphQL */ `
     onUpdateHike(filter: $filter) {
       id
       userId
+      username
       title
       distance
       description
@@ -78,6 +80,7 @@ export const onDeleteHike = /* GraphQL */ `
     onDeleteHike(filter: $filter) {
       id
       userId
+      username
       title
       distance
       description
