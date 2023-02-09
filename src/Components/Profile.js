@@ -86,37 +86,7 @@ function Profile() {
   /**
    * State management pulled from UserContext
    */
-  const { userInfo, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
-
-  const [userHikes, setUserHikes] = useState([]);
-
-  /**
-   * Fetch user hikes from database on page load
-   */
-  useEffect(() => {
-    async function fetchData() {
-      const hikes = await fetchUserHikes();
-      setUserHikes(hikes);
-    }
-    fetchData();
-  }, []);
-
-  /**
-   * @returns {Array} Array of hikes belonging to the user
-   */
-  const fetchUserHikes = async () => {
-    try {
-      const hikes = await API.graphql({
-        query: listHikes,
-        variables: { 
-          filter: { userId: { eq: userInfo.userId } } 
-        }
-      });
-      return hikes.data.listHikes.items
-    } catch (error) {
-      console.log('error fetching user hikes: ', error);
-    }
-  }
+  const { userInfo, userHikes, editHikeInfo, changeEditHikeDisplay, } = useContext(UserContext);
 
   return (
     <BodyNarrow>
@@ -132,9 +102,9 @@ function Profile() {
           <ProfileUsername>{userInfo.username}</ProfileUsername>
 
           <ProfileStatsWrapper>
-            <ProfileStat>0 hikes</ProfileStat>
-            <ProfileStat>0 followers</ProfileStat>
-            <ProfileStat>0 following</ProfileStat>
+            <ProfileStat>{userHikes?.length} hikes</ProfileStat>
+            {/* <ProfileStat>0 followers</ProfileStat>
+            <ProfileStat>0 following</ProfileStat> */}
           </ProfileStatsWrapper>
         </ProfileInfo>
        

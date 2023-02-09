@@ -17,8 +17,9 @@ import Friends from './Friends';
 import Discover from './Discover';
 import Map from './Map';
 import Profile from './Profile';
-import { listUsers } from '../graphql/queries';
+import { listUsers, listHikes } from '../graphql/queries';
 import UserContext from '../UserContext';
+import Loading from './Loading';
 
 
 Amplify.configure(config);
@@ -37,11 +38,13 @@ const AppWrapper = styled.div`
 
 function App( {signOut, user }) {
 
+  /**
+   * State management pulled from UserContext
+   */
+  const { userInfo, setUserInfo, userHikes, setUserHikes } = useContext(UserContext);
   
   // COMMENTED OUT FOR DEVELOPMENT PURPOSES
   // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
-  const { setUserInfo } = useContext(UserContext);
-
   /**
    * Fetch and set user info when the app loads
    */
@@ -49,10 +52,11 @@ function App( {signOut, user }) {
     async function fetchData() {
       const info = await fetchUserInfo(user);
       setUserInfo(info);
+      const hikes = await fetchUserHikes(info.userId);
+      setUserHikes(hikes);
     }
     fetchData();
   }, []);
-
 
   /**
    * Fetch all users from the database and return the userInfo that is associated with the signed in user
@@ -82,6 +86,23 @@ function App( {signOut, user }) {
     }
   };
   // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+
+  /**
+   * @returns {Array} Array of hikes belonging to the user
+   */
+  const fetchUserHikes = async (userId) => {
+    try {
+      const hikes = await API.graphql({
+        query: listHikes,
+        variables: { 
+          filter: { userId: { eq: userId } } 
+        }
+      });
+      return hikes.data.listHikes.items;
+    } catch (error) {
+      console.log('error fetching user hikes: ', error);
+    }
+  }
   
 
   return (
@@ -100,12 +121,13 @@ function App( {signOut, user }) {
 
             {/* BODY CONTENT */}
             <Routes>
-              <Route path='/' element={<Home />} />
+              <Route path='/' element={(userInfo && userHikes) ? <Home /> : <Loading />} /> // Only render Home component if user info and user hikes are available
               <Route path='/friends' element={<Friends />} />
               <Route path='/discover' element={<Discover />} />
               <Route path='/map' element={<Map />} />
               <Route path='/profile' element={<Profile />} />
             </Routes>
+
 
           </AppWrapper>
         </BrowserRouter>

@@ -26,6 +26,11 @@ export function UserProvider({ children }) {
     hike: null,
   });
 
+  /**
+   * The hikes associated with the current signed in user
+   */
+  const [userHikes, setUserHikes] = useState(null);
+
 
   /**
    * Changes the hike displayed in the EditHike component
@@ -47,6 +52,8 @@ export function UserProvider({ children }) {
     <UserContext.Provider value={{ 
       userInfo,  
       setUserInfo,
+      userHikes,
+      setUserHikes,
       editHikeInfo,
       changeEditHike,
       changeEditHikeDisplay, 
