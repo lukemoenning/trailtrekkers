@@ -7,9 +7,9 @@ type User @model @auth(rules: [{ allow: private }]) {
   id: String!
   username: String!
   email: String!
-  hikes: [Hike!] 
-  following: [User!]
-  followers: [User!] 
+  hikes: [String!] 
+  following: [String!]
+  followers: [String!] 
 }
 
 type Hike @model @auth(rules: [{ allow: private }]) {
@@ -25,13 +25,6 @@ type Hike @model @auth(rules: [{ allow: private }]) {
 # Input for updating a user
 input UpdateUserInput {
   id: String!
-  hikes: [HikesInput]
+  hikes: [String!]
 }
 
-input HikesInput {
-  connect: HikeId
-}
-
-input HikeId {
-  id: String!
-}

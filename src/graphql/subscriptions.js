@@ -7,81 +7,9 @@ export const onCreateUser = /* GraphQL */ `
       id
       username
       email
-      hikes {
-        id
-        userId
-        title
-        distance
-        description
-        imagePath
-        likes
-        createdAt
-        updatedAt
-      }
-      following {
-        id
-        username
-        email
-        hikes {
-          id
-          userId
-          title
-          distance
-          description
-          imagePath
-          likes
-          createdAt
-          updatedAt
-        }
-        following {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        followers {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      followers {
-        id
-        username
-        email
-        hikes {
-          id
-          userId
-          title
-          distance
-          description
-          imagePath
-          likes
-          createdAt
-          updatedAt
-        }
-        following {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        followers {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
+      hikes
+      following
+      followers
       createdAt
       updatedAt
     }
@@ -93,81 +21,9 @@ export const onUpdateUser = /* GraphQL */ `
       id
       username
       email
-      hikes {
-        id
-        userId
-        title
-        distance
-        description
-        imagePath
-        likes
-        createdAt
-        updatedAt
-      }
-      following {
-        id
-        username
-        email
-        hikes {
-          id
-          userId
-          title
-          distance
-          description
-          imagePath
-          likes
-          createdAt
-          updatedAt
-        }
-        following {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        followers {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      followers {
-        id
-        username
-        email
-        hikes {
-          id
-          userId
-          title
-          distance
-          description
-          imagePath
-          likes
-          createdAt
-          updatedAt
-        }
-        following {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        followers {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
+      hikes
+      following
+      followers
       createdAt
       updatedAt
     }
@@ -179,81 +35,9 @@ export const onDeleteUser = /* GraphQL */ `
       id
       username
       email
-      hikes {
-        id
-        userId
-        title
-        distance
-        description
-        imagePath
-        likes
-        createdAt
-        updatedAt
-      }
-      following {
-        id
-        username
-        email
-        hikes {
-          id
-          userId
-          title
-          distance
-          description
-          imagePath
-          likes
-          createdAt
-          updatedAt
-        }
-        following {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        followers {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      followers {
-        id
-        username
-        email
-        hikes {
-          id
-          userId
-          title
-          distance
-          description
-          imagePath
-          likes
-          createdAt
-          updatedAt
-        }
-        following {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        followers {
-          id
-          username
-          email
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
+      hikes
+      following
+      followers
       createdAt
       updatedAt
     }

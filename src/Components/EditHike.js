@@ -109,22 +109,23 @@ const CloseButton = styled(Close)`
 function EditHike() {
 
   /**
+   * State management pulled from UserContext
+   */
+  const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
+
+  /**
    * The information that correlates to the current hike displayed
    */
   const [hike, setHike] = useState({ 
     id: uuidv4(),
-    userId: '', 
+    userId: userId, 
     title: '', 
     distance: '', 
     description: '', 
     imagePath: 'my/path', 
-    likes: '15'
+    likes: '0'
   });
 
-  /**
-   * State management pulled from UserContext
-   */
-  const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
 
   /**
    * Post the hike to the Hike Table in Dynamo
@@ -135,65 +136,37 @@ function EditHike() {
 
     console.log(hike)
 
-    const postHike = await API.graphql({
-      query: createHikeAndAssociateWithUser,
-      variables: {
-        input: hike,
-        userId: userId,
-        hikeId: hike.id,
-      },
-    }).then(
-      console.log('Hike successfully placed in database'),
-    ).catch(
-      error => {console.log('Error: ', error)}
-    );
-
-
-
-    
     /**
      * Post the hike to the Hike Table in Dynamo
      */
-  //   const postHike = await API.graphql({ 
-  //     query: createHike,
-  //     variables: {
-  //       input: hike
-  //     },
-  //   }).then(
-  //     console.log('Hike successfully placed in database'),
-  //     changeEditHikeDisplay(false) // Set the display of the EditHike form to false
-  //   ).catch(
-  //     error => {console.log('Error: ', error)}
-  //   )
+    const postHike = await API.graphql({ 
+      query: createHike,
+      variables: {
+        input: hike
+      },
+    }).then(
+      console.log('Hike successfully placed in database'),
+      changeEditHikeDisplay(false) // Set the display of the EditHike form to false
+    ).catch(
+      error => {console.log('Error: ', error)}
+    )
 
-  //   const gethikes = await API.graphql({
-  //     query: listHikes,
-  //   }).then(
-  //     console.log('Hikes successfully retrieved from database')
-  //   ).catch(
-  //     error => {console.log('Error: ', error)}
-  //   )
-
-  //   /**
-  //    * Associate the hike to the User in Dynamo
-  //    */
-  //   const postHikeToUser = await API.graphql({ 
-  //     query: updateUser,
-  //     variables: {
-  //       input: {
-  //         id: userId,
-  //         hikes: {
-  //           connect: {
-  //             id: hike.id
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }).then(
-  //     console.log('Hike successfully associated with user in database')
-  //   ).catch(
-  //     error => {console.log('Error: ', error)}
-  //   )
+    /**
+     * Associate the hike to the User in Dynamo
+     */
+    const postHikeToUser = await API.graphql({ 
+      query: updateUser,
+      variables: {
+        input: {
+          id: userId,
+          hikes: hike.id
+        }
+      }
+    }).then(
+      console.log('Hike successfully associated with user in database')
+    ).catch(
+      error => {console.log('Error: ', error)}
+    )
   }
 
   /**
