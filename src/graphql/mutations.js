@@ -93,7 +93,7 @@ export const createUser = /* GraphQL */ `
 export const updateUser = /* GraphQL */ `
   mutation UpdateUser(
     $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
+    $condition: ModelUserConditionInput 
   ) {
     updateUser(input: $input, condition: $condition) {
       id
@@ -317,6 +317,47 @@ export const deleteHike = /* GraphQL */ `
       description
       imagePath
       likes
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createHikeAndAssociateWithUser = /* GraphQL */ `
+  mutation CreateHikeAndAssociateWithUser($input: CreateHikeInput!, $userId: String!, $hikeId: String!) {
+    createHike(input: $input) {
+      id
+      userId
+      title
+      distance
+      description
+      imagePath
+      likes
+      createdAt
+      updatedAt
+    }
+    updateUser(input: {
+      id: $userId,
+      hikes: {
+        connect: {
+          id: $hikeId
+        }
+      }
+    }
+    ) {
+      id
+      username
+      email
+      hikes {
+        id
+        userId
+        title
+        distance
+        description
+        imagePath
+        likes
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

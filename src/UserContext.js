@@ -12,7 +12,7 @@ export function UserProvider({ children }) {
   /**
    * User ID of the current signed in user
    */
-  const [userId, setUserId] = useState('be9d531a-84b8-4611-b356-f22a472b2737'); // SHOULD BE SET TO NULL
+  const [userId, setUserId] = useState('d68a4d63-8f7b-47a7-99d0-7e56d908f6ef'); // SHOULD BE SET TO NULL
 
 
   /**

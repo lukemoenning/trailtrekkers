@@ -7,7 +7,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import { View, TextAreaField, Button } from '@aws-amplify/ui-react';
 import { API } from 'aws-amplify';
-import { createHike } from '../graphql/mutations';
+import { createHike, createHikeAndAssociateWithUser, updateUser } from '../graphql/mutations';
+import { listHikes } from '../graphql/queries';
 import { v4 as uuidv4 } from 'uuid';
 import { palette, styles } from './assets/constants';
 import { Close, Upload } from '@mui/icons-material';
@@ -105,7 +106,7 @@ const CloseButton = styled(Close)`
   }
 `;
 
-function EditHike({ handleClose }) {
+function EditHike() {
 
   /**
    * The information that correlates to the current hike displayed
@@ -126,25 +127,73 @@ function EditHike({ handleClose }) {
   const { userId, editHikeInfo, changeEditHikeDisplay } = useContext(UserContext);
 
   /**
-   * Set a UUID and userId for the hike, then post it to the Hike Table in Dynamo
+   * Post the hike to the Hike Table in Dynamo
    * @param {*} event EditForm submit event
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const id = uuidv4(); // Generate a UUID
-    setHike({ ...hike, [id]: id}); // Set the UUID and userId of the hike
-    setHike({ ...hike, [userId]: userId }); // Set the UUID and userId of the hike
-    const postHike = await API.graphql({ // Post the hike in the Hike Table
-      query: createHike,
+
+    console.log(hike)
+
+    const postHike = await API.graphql({
+      query: createHikeAndAssociateWithUser,
       variables: {
-        input: hike
+        input: hike,
+        userId: userId,
+        hikeId: hike.id,
       },
     }).then(
       console.log('Hike successfully placed in database'),
-      changeEditHikeDisplay(false) // Set the display of the EditHike form to false
     ).catch(
       error => {console.log('Error: ', error)}
-    )
+    );
+
+
+
+    
+    /**
+     * Post the hike to the Hike Table in Dynamo
+     */
+  //   const postHike = await API.graphql({ 
+  //     query: createHike,
+  //     variables: {
+  //       input: hike
+  //     },
+  //   }).then(
+  //     console.log('Hike successfully placed in database'),
+  //     changeEditHikeDisplay(false) // Set the display of the EditHike form to false
+  //   ).catch(
+  //     error => {console.log('Error: ', error)}
+  //   )
+
+  //   const gethikes = await API.graphql({
+  //     query: listHikes,
+  //   }).then(
+  //     console.log('Hikes successfully retrieved from database')
+  //   ).catch(
+  //     error => {console.log('Error: ', error)}
+  //   )
+
+  //   /**
+  //    * Associate the hike to the User in Dynamo
+  //    */
+  //   const postHikeToUser = await API.graphql({ 
+  //     query: updateUser,
+  //     variables: {
+  //       input: {
+  //         id: userId,
+  //         hikes: {
+  //           connect: {
+  //             id: hike.id
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }).then(
+  //     console.log('Hike successfully associated with user in database')
+  //   ).catch(
+  //     error => {console.log('Error: ', error)}
+  //   )
   }
 
   /**
