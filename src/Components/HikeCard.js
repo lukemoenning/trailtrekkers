@@ -6,23 +6,78 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { palette, styles } from './assets/constants';
 import UserContext from '../UserContext';
+import { Settings } from '@mui/icons-material';
 
 
 const HikeCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 300px;
-  height: 500px;
-  background: ${palette.OFF_WHITE};
+  margin: 20px;
+  width: 80%;
+  min-width: 400px;
+  height: 700px;
+  background: ${palette.WHITE};
   border-radius: ${styles.BORDER_RADIUS};
 `;
 
-const HikeCardPhoto = styled.div`
-  width: 250px;
-  height: 250px;
+const HikeCardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 80px;
+  padding: 20px;
+`;
+
+const HikeCardUserInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const HikeCardUserPhoto = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
   background: ${palette.GRAY};
+`;
+
+const HikeCardLargeText = styled.p`
+  font-size: large;
+  font-weight: italic;
+  color: ${palette.BLACK};
+  margin: 10px;
+`;
+
+const HikeCardSmallText = styled(HikeCardLargeText)`
+  font-size: small;
+  font-weight: normal;
+`;
+
+const HikeCardPhoto = styled.div`
+  width: 100%;
+  padding-bottom: 100%;
+  background: ${palette.GRAY};
+`;
+
+const HikeCardTitleAndDistance = styled.div` 
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+const EditButton = styled(Settings)`
+  align-self: center;
+  color: ${palette.BROWN};
+  transition: ease-in 200ms;
+  margin-left: auto;
+
+  &:hover {
+    transform: scale(1.1, 1.1);
+    cursor: pointer;
+    opacity: 0.5;
+  }
 `;
 
 function HikeCard({ hike }) {
@@ -35,14 +90,25 @@ function HikeCard({ hike }) {
   return (
     <HikeCardWrapper>
 
+      <HikeCardHeader>
+        {/* IF THE HIKE BELONGS TO THE SIGNED IN USER, DISPLAY THE EDIT BUTTON INSTEAD OF USER INFORMATION */}
+        {hike.userId!=userInfo.userId   
+          ? (<HikeCardUserInfo>
+              <HikeCardUserPhoto /> 
+              <HikeCardLargeText>{hike.username}</HikeCardLargeText>
+            </HikeCardUserInfo>)
+          : <EditButton />
+        } 
+      </HikeCardHeader>
+
       <HikeCardPhoto />
 
-      {/* IF THE HIKE BELONGS TO THE SIGNED IN USER, DON'T DISPLAY THE USERNAME */}
-      {hike.userId!=userInfo.userId && <h1>{hike.username}</h1>} 
+      <HikeCardTitleAndDistance>
+        <HikeCardLargeText>{hike.title}</HikeCardLargeText>
+        <HikeCardLargeText>{hike.distance}{hike.distance===1 ? ' mile' : ' miles'}</HikeCardLargeText>
+      </HikeCardTitleAndDistance>
 
-      <h1>{hike.title}</h1>
-      <h2>{hike.distance}</h2>
-      <p>{hike.description}</p>
+      <HikeCardSmallText>{hike.description}</HikeCardSmallText>
     </HikeCardWrapper>
   );
 };

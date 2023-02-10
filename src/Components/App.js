@@ -13,9 +13,7 @@ import { palette, styles } from './assets/constants';
 import { authenticatorComponents, authenticatorFormFields } from './Authenticator.styles';
 import Navbar from './Navbar';
 import Home from './Home';
-import Friends from './Discover';
 import Discover from './Discover';
-import Map from './Map';
 import Profile from './Profile';
 import { listUsers, listHikes } from '../graphql/queries';
 import UserContext from '../UserContext';
@@ -49,14 +47,15 @@ function App( {signOut, user }) {
    * Fetch and set user info when the app loads
    */
   useEffect(() => {
-    async function fetchData() {
-      const info = await fetchUserInfo(user);
-      setUserInfo(info);
-      const hikes = await fetchUserHikes(info.userId);
-      setUserHikes(hikes);
-    }
-    fetchData();
+    // async function fetchData() {
+    //   const info = await fetchUserInfo(user);
+    //   setUserInfo(info);
+    //   const hikes = await fetchUserHikes(info.userId);
+    //   setUserHikes(hikes);
+    // }
+    // fetchData();
   }, []);
+  // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
 
   /**
    * Fetch all users from the database and return the userInfo that is associated with the signed in user
@@ -85,7 +84,6 @@ function App( {signOut, user }) {
       console.log("Error while fetching userId: ", error);
     }
   };
-  // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
 
   /**
    * @returns {Array} Array of hikes belonging to the user
@@ -123,7 +121,6 @@ function App( {signOut, user }) {
             <Routes>
               <Route path='/' element={(userInfo && userHikes) ? <Home /> : <Loading />} /> // Only render Home component if user info and user hikes are available
               <Route path='/discover' element={<Discover />} />
-              {/* <Route path='/map' element={<Map />} /> */}
               <Route path='/profile' element={<Profile />} />
             </Routes>
 

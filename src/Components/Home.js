@@ -14,6 +14,7 @@ function Home() {
    * State management pulled from UserContext
    */
   const { userHikes } = useContext(UserContext);
+  console.log('userHikes: ', userHikes)
 
   /**
    * My Total Miles Hiked

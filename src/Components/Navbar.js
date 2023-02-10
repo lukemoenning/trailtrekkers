@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { palette, styles } from './assets/constants';
-import { Home, Groups, Explore, Map, AccountCircle, ExitToApp } from '@mui/icons-material';
+import { Home, Groups, AccountCircle, ExitToApp } from '@mui/icons-material';
 import NavbarItem from './NavbarItem';
 import { ReactComponent as Logo } from './assets/images/trailtrekkers-logo.svg';
 

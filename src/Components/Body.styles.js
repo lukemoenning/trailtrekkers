@@ -10,7 +10,7 @@ export const BodyNarrow = styled.div`
   flex-direction: column;
   width: 80%;
   max-width: 600px;
-  background: ${palette.WHITE};
+  background: ${palette.OFF_WHITE};
 
   @media (max-width: ${styles.DESKTOP_MIN_WIDTH}) {
     margin-top: ${styles.MOBILE_HEIGHT};
@@ -20,4 +20,12 @@ export const BodyNarrow = styled.div`
 
 export const BodyWide = styled(BodyNarrow)`
   max-width: 900px;
+`;
+
+export const HikesWrapper = styled.div`
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
 `;

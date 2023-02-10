@@ -4,7 +4,7 @@
 
 import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { BodyNarrow } from './Body.styles';
+import { BodyNarrow, HikesWrapper } from './Body.styles';
 import { palette, styles } from './assets/constants';
 import EditHike from './EditHike';
 import UserContext from '../UserContext';
@@ -17,6 +17,9 @@ const ProfileHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  margin-top: 20px;
+  background: ${palette.WHITE};
+  border-radius: ${styles.BORDER_RADIUS};
   width: 100%;
   height: 200px;
   padding: 20px;
@@ -37,6 +40,7 @@ const ProfileInfo = styled.div`
 
 const ProfileUsername = styled.p`
   font-size: large;
+  font-weight: bold;
   color: ${palette.BLACK};
   margin: 20px 20px 20px 0;
 `;
@@ -47,6 +51,7 @@ const ProfileStatsWrapper = styled.div`
 
 const ProfileStat = styled(ProfileUsername)`
   font-size: medium;
+  font-weight: normal;
 `;
 
 const ProfileHorizontalLine = styled.hr`
@@ -59,19 +64,17 @@ const ProfileHorizontalLine = styled.hr`
   margin: 10px auto 10px auto;
 `;
 
-const MyHikesWrapper = styled.div`
-  display: flex;
-  flex-direction: column; 
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  outline: 1px solid red;
-`;
+
 
 const NewHikeButton = styled.button`
-  border: none; 
+  border: 1px solid ${palette.BROWN};
   background: none;
   color: ${palette.BROWN};
+  width: 200px;
+  font-size: large;
+  font-weight: bold;
+  align-self: center;
+  margin: 20px 0 20px 0;
   border-radius: ${styles.BORDER_RADIUS};
   transition: 300ms;
 
@@ -102,7 +105,7 @@ function Profile() {
           <ProfileUsername>{userInfo.username}</ProfileUsername>
 
           <ProfileStatsWrapper>
-            <ProfileStat>{userHikes?.length} hikes</ProfileStat>
+            <ProfileStat>{userHikes?.length}{userHikes?.length===1 ? ' hike' : ' hikes'}</ProfileStat>
             {/* <ProfileStat>0 followers</ProfileStat>
             <ProfileStat>0 following</ProfileStat> */}
           </ProfileStatsWrapper>
@@ -111,19 +114,21 @@ function Profile() {
       </ProfileHeader>
 
       {/* SEPERATE HEADER FROM HIKES */}
-      <ProfileHorizontalLine />
+      {/* <ProfileHorizontalLine /> */}
+
+      {/* BUTTON TO CREATE A NEW HIKE */}
+      <NewHikeButton onClick={() => {changeEditHikeDisplay(true)}}>Share a hike</NewHikeButton>
+      {editHikeInfo.display && <EditHike />}
 
       {/* USER HIKES */}
-      <MyHikesWrapper>
-        <NewHikeButton onClick={() => {changeEditHikeDisplay(true)}}>Share a hike</NewHikeButton>
-        {editHikeInfo.display && <EditHike />}
+      <HikesWrapper>
 
         {/* MAP THROUGH USER HIKES IF THEY EXIST AND CREATE A HIKECARD FOR EACH */}
         {userHikes && userHikes.map(hike => {
           return <HikeCard key={hike.id} hike={hike} />
         })}
 
-      </MyHikesWrapper>
+      </HikesWrapper>
 
     </BodyNarrow>
   );
