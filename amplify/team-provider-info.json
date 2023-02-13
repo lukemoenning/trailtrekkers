@@ -23,6 +23,9 @@
           "deploymentBucketName": "amplify-trailtrekkers-dev-211159-deployment",
           "s3Key": "amplify-builds/postNewUser-3135304151654559477a-build.zip"
         }
+      },
+      "storage": {
+        "photoBank": {}
       }
     }
   }

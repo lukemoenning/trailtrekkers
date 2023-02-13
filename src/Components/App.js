@@ -5,7 +5,7 @@
 import React, { useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Amplify, API, graphqlOperation } from 'aws-amplify';
+import { Amplify, API, Storage } from 'aws-amplify';
 import config from '../aws-exports';
 import { Authenticator, withAuthenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';

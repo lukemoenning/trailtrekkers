@@ -9,9 +9,10 @@ import { View, TextAreaField, Button } from '@aws-amplify/ui-react';
 import { API } from 'aws-amplify';
 import { createHike, createHikeAndAssociateWithUser, updateUser } from '../graphql/mutations';
 import { listHikes } from '../graphql/queries';
+import { Storage } from 'aws-amplify';
 import { v4 as uuidv4 } from 'uuid';
 import { palette, styles } from './assets/constants';
-import { Close, Upload } from '@mui/icons-material';
+import { Close, Upload, UploadFile } from '@mui/icons-material';
 import UserContext from '../UserContext';
 
 
@@ -179,6 +180,16 @@ function EditHike() {
     setHike({ ...hike, [name]: value });
   }
 
+  const uploadFile = async (event) => {
+    const file = event.target.files[0];
+    try {
+      await Storage.put(file.name, file);
+      setHike({ ...hike, imagePath: file.name });
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
+  }
+
   return (
     <BlurBackground>
       <EditHikeWrapper onSubmit={handleSubmit}>
@@ -186,6 +197,11 @@ function EditHike() {
         {/* HIKE PICTURE */}
         <EditHikePhotoWrapper>
           <Upload />
+          <input 
+          type={'file'} 
+          accept={'image/*'}
+          onChange={uploadFile}
+          />
         </EditHikePhotoWrapper>
 
         {/* INFORMATION ABOUT THE HIKE */}

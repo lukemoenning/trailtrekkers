@@ -1,0 +1,14 @@
+{
+  "resourceName": "photoBank",
+  "policyUUID": "0c0e943e",
+  "bucketName": "trailtrekkers5c50094133f74abfbec6be6c51f07f35",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

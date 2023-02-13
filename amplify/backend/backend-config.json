@@ -75,5 +75,12 @@
         }
       ]
     }
+  },
+  "storage": {
+    "photoBank": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    }
   }
 }

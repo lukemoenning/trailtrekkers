@@ -55,10 +55,9 @@ const HikeCardSmallText = styled(HikeCardLargeText)`
   font-weight: normal;
 `;
 
-const HikeCardPhoto = styled.div`
+const HikeCardPhoto = styled.img`
   width: 100%;
   padding-bottom: 100%;
-  background: ${palette.GRAY};
 `;
 
 const HikeCardTitleAndDistance = styled.div` 
@@ -79,6 +78,16 @@ const EditButton = styled(Settings)`
     opacity: 0.5;
   }
 `;
+
+/**
+ * Retrieves the hike photo from S3
+ * @param {*} imagePath image path from S3
+ * @returns 
+ */
+const getHikePhoto = async (imagePath) => {
+  const hikePhoto = await Storage.get(imagePath);
+  return hikePhoto;
+};
 
 function HikeCard({ hike }) {
 
@@ -101,7 +110,7 @@ function HikeCard({ hike }) {
         } 
       </HikeCardHeader>
 
-      <HikeCardPhoto />
+      <HikeCardPhoto src={getHikePhoto(hike.imagePath)} />
 
       <HikeCardTitleAndDistance>
         <HikeCardLargeText>{hike.title}</HikeCardLargeText>
