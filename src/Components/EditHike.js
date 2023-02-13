@@ -128,6 +128,10 @@ function EditHike() {
     likes: '0'
   });
 
+  /**
+   * The image file that is to be uploaded to the S3 bucket
+   */
+  const [imageFile, setImageFile] = useState(null);
 
   /**
    * Post the hike to the Hike Table in Dynamo
@@ -135,8 +139,6 @@ function EditHike() {
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    console.log(hike)
 
     /**
      * Post the hike to the Hike Table in Dynamo
@@ -169,6 +171,9 @@ function EditHike() {
     ).catch(
       error => {console.log('Error: ', error)}
     )
+
+    // Upload the image to the S3 bucket
+    uploadFile(imageFile);
   }
 
   /**
@@ -180,11 +185,23 @@ function EditHike() {
     setHike({ ...hike, [name]: value });
   }
 
-  const uploadFile = async (event) => {
+  /**
+   * Update the image file on change
+   * @param {*} event change to the file input field
+   */
+  const handleFileChange = (event) => {
     const file = event.target.files[0];
+    setImageFile(file);
+  }
+
+  /**
+   * Upload the image to the S3 bucket
+   * @param {*} event 
+   */
+  const uploadFile = async (file) => {
     try {
-      await Storage.put(file.name, file);
-      setHike({ ...hike, imagePath: file.name });
+      await Storage.put('photo' + hike.id, file);
+      setHike({ ...hike, imagePath: 'photo' + hike.id });
     } catch (error) {
       console.log('Error uploading file: ', error);
     }
@@ -200,7 +217,7 @@ function EditHike() {
           <input 
           type={'file'} 
           accept={'image/*'}
-          onChange={uploadFile}
+          onChange={handleFileChange}
           />
         </EditHikePhotoWrapper>
 

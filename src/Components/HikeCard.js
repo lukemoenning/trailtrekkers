@@ -2,11 +2,12 @@
  * Card for displaying information about a hike
  */
 
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { palette, styles } from './assets/constants';
 import UserContext from '../UserContext';
 import { Settings } from '@mui/icons-material';
+import { Storage } from 'aws-amplify';
 
 
 const HikeCardWrapper = styled.div`
@@ -96,6 +97,35 @@ function HikeCard({ hike }) {
    */
   const {userInfo} = useContext(UserContext);
 
+  /**
+   * URL for the hike photo
+   */
+  const [hikePhotoURL, setHikePhotoURL] = useState(null);
+  
+  /**
+   * Retrieves the hike photo from S3
+   * @param {*} imagePath image path from S3
+   * @returns 
+   */
+  const getHikePhoto = async (imagePath) => {
+    try {
+      const hikePhoto = await Storage.get(imagePath);
+      setHikePhotoURL(URL.createObjectURL(hikePhoto)); 
+    } catch (error) {
+      console.log('Error retrieving hike photo: ', error);
+    }
+  };
+
+  /**
+   * Retrieves the hike photo from S3 when the component is mounted
+   */
+  useEffect(() => {
+    async function fetchData() {
+      const file = await getHikePhoto(hike.imagePath);
+    }
+    fetchData();
+  }, []);
+
   return (
     <HikeCardWrapper>
 
@@ -110,7 +140,7 @@ function HikeCard({ hike }) {
         } 
       </HikeCardHeader>
 
-      <HikeCardPhoto src={getHikePhoto(hike.imagePath)} />
+      <HikeCardPhoto src={hikePhotoURL} />
 
       <HikeCardTitleAndDistance>
         <HikeCardLargeText>{hike.title}</HikeCardLargeText>
