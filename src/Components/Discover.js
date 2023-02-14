@@ -24,7 +24,7 @@ function Discover() {
    */
   const [hikes, setHikes] = useState([
     {
-      "id": "c9bb9141-94d4-49af-8c18-7b69a85c429e",
+      "id": "c9bb9141-94d4-49af-8c18-7b69a73c429e",
       "userId": '49309afc-1b0a-4609-9976-b3eebc65b75a',
       "createdAt": "2023-02-09T06:14:17.026Z",
       "description": "This scenic hike takes you through a redwood forest and ends at a stunning waterfall.",
@@ -48,7 +48,7 @@ function Discover() {
       "username": "lsmoenning"
       },
       {
-      "id": "c9bb9141-94d4-49af-8c18-7b69a85f429e",
+      "id": "c9bb2141-94d4-49af-8c18-7b69a85f429e",
       "userId": '49309afc-1b0a-2709-9976-b3eebc65b75a',
       "createdAt": "2023-02-09T06:14:17.026Z",
       "description": "This leisurely hike follows a river and passes by several picturesque swimming holes.",

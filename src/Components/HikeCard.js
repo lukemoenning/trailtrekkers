@@ -36,12 +36,11 @@ const HikeCardUserInfo = styled.div`
   align-items: center;
 `;
 
-const HikeCardUserPhoto = styled.div`
+const HikeCardUserPhoto = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
   margin-right: 10px;
-  background: ${palette.GRAY};
 `;
 
 const HikeCardLargeText = styled.p`
@@ -80,16 +79,6 @@ const EditButton = styled(Settings)`
   }
 `;
 
-/**
- * Retrieves the hike photo from S3
- * @param {*} imagePath image path from S3
- * @returns 
- */
-const getHikePhoto = async (imagePath) => {
-  const hikePhoto = await Storage.get(imagePath);
-  return hikePhoto;
-};
-
 function HikeCard({ hike }) {
 
   /**
@@ -101,6 +90,11 @@ function HikeCard({ hike }) {
    * URL for the hike photo
    */
   const [hikePhotoURL, setHikePhotoURL] = useState(null);
+
+  /**
+   * URL for the user photo
+   */
+  const [userPhotoURL, setUserPhotoURL] = useState(null);
   
   /**
    * Retrieves the hike photo from S3
@@ -108,12 +102,12 @@ function HikeCard({ hike }) {
    * @returns 
    */
   const getHikePhoto = async (imagePath) => {
-    try {
-      const hikePhoto = await Storage.get(imagePath);
-      setHikePhotoURL(URL.createObjectURL(hikePhoto)); 
-    } catch (error) {
-      console.log('Error retrieving hike photo: ', error);
-    }
+    // try {
+    //   const hikePhoto = await Storage.get(imagePath);
+    //   setHikePhotoURL(URL.createObjectURL(hikePhoto)); 
+    // } catch (error) {
+    //   console.log('Error retrieving hike photo: ', error);
+    // }
   };
 
   /**
@@ -133,7 +127,7 @@ function HikeCard({ hike }) {
         {/* IF THE HIKE BELONGS TO THE SIGNED IN USER, DISPLAY THE EDIT BUTTON INSTEAD OF USER INFORMATION */}
         {hike.userId!=userInfo.userId   
           ? (<HikeCardUserInfo>
-              <HikeCardUserPhoto /> 
+              <HikeCardUserPhoto src={userPhotoURL ? userPhotoURL : require('./assets/images/blank-profile-picture.png')} />
               <HikeCardLargeText>{hike.username}</HikeCardLargeText>
             </HikeCardUserInfo>)
           : <EditButton />

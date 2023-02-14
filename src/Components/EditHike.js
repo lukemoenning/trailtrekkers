@@ -199,12 +199,12 @@ function EditHike() {
    * @param {*} event 
    */
   const uploadFile = async (file) => {
-    try {
-      await Storage.put('photo' + hike.id, file);
-      setHike({ ...hike, imagePath: 'photo' + hike.id });
-    } catch (error) {
-      console.log('Error uploading file: ', error);
-    }
+    // try {
+    //   await Storage.put('photo' + hike.id, file);
+    //   setHike({ ...hike, imagePath: 'photo' + hike.id });
+    // } catch (error) {
+    //   console.log('Error uploading file: ', error);
+    // }
   }
 
   return (
