@@ -109,11 +109,11 @@ function HikeCard({ hike }) {
    * @returns 
    */
   const getPhoto = async (imagePath, setter) => {
-    try {
-      const fetchPhoto = await Storage.get(imagePath).then(photo => (setter(photo)));
-    } catch (error) {
-      console.log('Error retrieving hike photo: ', error);
-    }
+    // try {
+    //   const fetchPhoto = await Storage.get(imagePath).then(photo => (setter(photo)));
+    // } catch (error) {
+    //   console.log('Error retrieving hike photo: ', error);
+    // }
   };
 
   /**
