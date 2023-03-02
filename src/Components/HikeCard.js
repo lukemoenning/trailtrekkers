@@ -17,7 +17,7 @@ const HikeCardWrapper = styled.div`
   margin: 20px;
   width: 80%;
   min-width: 400px;
-  height: 700px;
+  height: auto;
   background: ${palette.WHITE};
   border-radius: ${styles.BORDER_RADIUS};
 `;
@@ -43,6 +43,13 @@ const HikeCardUserPhoto = styled.img`
   margin-right: 10px;
 `;
 
+const HikeCardInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+`;
+
 const HikeCardLargeText = styled.p`
   font-size: large;
   font-weight: italic;
@@ -57,7 +64,7 @@ const HikeCardSmallText = styled(HikeCardLargeText)`
 
 const HikeCardPhoto = styled.img`
   width: 100%;
-  padding-bottom: 100%;
+  object-fit: cover;
 `;
 
 const HikeCardTitleAndDistance = styled.div` 
@@ -89,25 +96,24 @@ function HikeCard({ hike }) {
   /**
    * URL for the hike photo
    */
-  const [hikePhotoURL, setHikePhotoURL] = useState(null);
+  const [hikePhoto, setHikePhoto] = useState(null);
 
   /**
    * URL for the user photo
    */
-  const [userPhotoURL, setUserPhotoURL] = useState(null);
+  const [userPhoto, setUserPhoto] = useState(null);
   
   /**
    * Retrieves the hike photo from S3
    * @param {*} imagePath image path from S3
    * @returns 
    */
-  const getHikePhoto = async (imagePath) => {
-    // try {
-    //   const hikePhoto = await Storage.get(imagePath);
-    //   setHikePhotoURL(URL.createObjectURL(hikePhoto)); 
-    // } catch (error) {
-    //   console.log('Error retrieving hike photo: ', error);
-    // }
+  const getPhoto = async (imagePath, setter) => {
+    try {
+      const fetchPhoto = await Storage.get(imagePath).then(photo => (setter(photo)));
+    } catch (error) {
+      console.log('Error retrieving hike photo: ', error);
+    }
   };
 
   /**
@@ -115,7 +121,7 @@ function HikeCard({ hike }) {
    */
   useEffect(() => {
     async function fetchData() {
-      const file = await getHikePhoto(hike.imagePath);
+      const hikePhoto = await getPhoto(hike.imagePath, setHikePhoto);
     }
     fetchData();
   }, []);
@@ -127,21 +133,23 @@ function HikeCard({ hike }) {
         {/* IF THE HIKE BELONGS TO THE SIGNED IN USER, DISPLAY THE EDIT BUTTON INSTEAD OF USER INFORMATION */}
         {hike.userId!=userInfo.userId   
           ? (<HikeCardUserInfo>
-              <HikeCardUserPhoto src={userPhotoURL ? userPhotoURL : require('./assets/images/blank-profile-picture.png')} />
+              <HikeCardUserPhoto src={userPhoto ? userPhoto : require('./assets/images/blank-profile-picture.png')} />
               <HikeCardLargeText>{hike.username}</HikeCardLargeText>
             </HikeCardUserInfo>)
           : <EditButton />
         } 
       </HikeCardHeader>
 
-      <HikeCardPhoto src={hikePhotoURL} />
+      <HikeCardPhoto src={hikePhoto} />
 
-      <HikeCardTitleAndDistance>
-        <HikeCardLargeText>{hike.title}</HikeCardLargeText>
-        <HikeCardLargeText>{hike.distance}{hike.distance===1 ? ' mile' : ' miles'}</HikeCardLargeText>
-      </HikeCardTitleAndDistance>
+      <HikeCardInfo>
+        <HikeCardTitleAndDistance>
+          <HikeCardLargeText>{hike.title}</HikeCardLargeText>
+          <HikeCardLargeText>{hike.distance}{hike.distance===1 ? ' mile' : ' miles'}</HikeCardLargeText>
+        </HikeCardTitleAndDistance>
 
-      <HikeCardSmallText>{hike.description}</HikeCardSmallText>
+        <HikeCardSmallText>{hike.description}</HikeCardSmallText>
+      </HikeCardInfo>
     </HikeCardWrapper>
   );
 };

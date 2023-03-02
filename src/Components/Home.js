@@ -120,7 +120,7 @@ function Home() {
         </HomeMilage>
 
 
-        <p>Take a trip through your hike memories.</p>
+        <p>Take a hike through your memories.</p>
         {/* HIKE PHOTOS */}
         <HomeHikePhotosWrapper>
           {userHikes ? (userHikes.map((hike) => {

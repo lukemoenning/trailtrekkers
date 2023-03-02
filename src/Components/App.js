@@ -47,13 +47,13 @@ function App( {signOut, user }) {
    * Fetch and set user info when the app loads
    */
   useEffect(() => {
-    // async function fetchData() {
-    //   const info = await fetchUserInfo(user);
-    //   setUserInfo(info);
-    //   const hikes = await fetchUserHikes(info.userId);
-    //   setUserHikes(hikes);
-    // }
-    // fetchData();
+    async function fetchData() {
+      const info = await fetchUserInfo(user);
+      setUserInfo(info);
+      const hikes = await fetchUserHikes(info.userId);
+      setUserHikes(hikes);
+    }
+    fetchData();
   }, []);
   // ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
 

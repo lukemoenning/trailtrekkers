@@ -124,7 +124,7 @@ function EditHike() {
     title: '', 
     distance: '', 
     description: '', 
-    imagePath: 'my/path', 
+    imagePath: '', 
     likes: '0'
   });
 
@@ -133,12 +133,16 @@ function EditHike() {
    */
   const [imageFile, setImageFile] = useState(null);
 
+
   /**
    * Post the hike to the Hike Table in Dynamo
    * @param {*} event EditForm submit event
    */
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // Upload the image to the S3 bucket
+    uploadFile(imageFile);
 
     /**
      * Post the hike to the Hike Table in Dynamo
@@ -172,8 +176,6 @@ function EditHike() {
       error => {console.log('Error: ', error)}
     )
 
-    // Upload the image to the S3 bucket
-    uploadFile(imageFile);
   }
 
   /**
@@ -186,12 +188,13 @@ function EditHike() {
   }
 
   /**
-   * Update the image file on change
+   * Update the image file on change and the image path to the hike
    * @param {*} event change to the file input field
    */
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setImageFile(file);
+    setHike({ ...hike, imagePath: 'photo' + hike.id });
   }
 
   /**
@@ -199,12 +202,11 @@ function EditHike() {
    * @param {*} event 
    */
   const uploadFile = async (file) => {
-    // try {
-    //   await Storage.put('photo' + hike.id, file);
-    //   setHike({ ...hike, imagePath: 'photo' + hike.id });
-    // } catch (error) {
-    //   console.log('Error uploading file: ', error);
-    // }
+    try {
+      await Storage.put('photo' + hike.id, file);
+    } catch (error) {
+      console.log('Error uploading file: ', error);
+    }
   }
 
   return (
