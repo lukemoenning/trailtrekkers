@@ -13,6 +13,7 @@ import { API } from 'aws-amplify';
 import HikeCard from './HikeCard';
 import { Upload } from '@mui/icons-material';
 import { Input, IconButton } from '@mui/material';
+import UploadProfilePhoto from './UploadProfilePhoto';
 
 
 const ProfileHeader = styled.div`
@@ -28,28 +29,19 @@ const ProfileHeader = styled.div`
 `;
 
 const ProfilePhotoWrapper = styled.div`
-  position: relative;
-  outline: 1px solid red;
-`;
-
-const UploadProfilePhoto = styled(Input)`
-  height: 130px;
-  width: 130px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  opacity: ${({ showUpload }) => (showUpload ? 1 : 0)};
-  transition: 200ms ease-in;
-  z-index: 1;
-`;
-
-const ProfilePhoto = styled.img`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 130px;
   width: 130px;
   border-radius: 50%;
-  opacity: ${({ showUpload }) => (showUpload ? 0.5 : 1)};
+`;
+
+const ProfilePhoto = styled.img`
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 `;
 
 const ProfileInfo = styled.div`
@@ -109,20 +101,6 @@ function Profile() {
    */
   const [showUpload, setShowUpload] = useState(false);
 
-  /**
-   * Function to handle the mouse enter event on the profile photo
-   */
-  const handleMouseEnter = () => {
-    setShowUpload(true);
-  };
-
-  /** 
-   * Function to handle the mouse leave event on the profile photo
-   */
-  const handleMouseLeave = () => {
-    setShowUpload(false);
-  };
-
   return (
     <BodyNarrow>
 
@@ -130,21 +108,13 @@ function Profile() {
       <ProfileHeader>
 
         {/* USER PHOTO */}
-        <ProfilePhotoWrapper onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          <ProfilePhoto showUpload={showUpload} src={require('./assets/images/blank-profile-picture.png')} />
-          <UploadProfilePhoto
-            type="file"
-            id="upload-file"
-            inputProps={{ 'aria-label': 'upload file' }}
-            style={{ display: 'none' }}
-          />
-          <label htmlFor="upload-file">
-            <IconButton component="span">
-              <Upload />
-            </IconButton>
-          </label>
-          {/* <UploadProfilePhoto showUpload={showUpload} type={'file'} accept={'image/*'}> */}
-          {/* </UploadProfilePhoto> */}
+        <ProfilePhotoWrapper onMouseEnter={() => setShowUpload(true)} onMouseLeave={() => setShowUpload(false)}>
+
+          {/* IF SHOWUPLOAD IS TRUE, SHOW THE UPLOADPROFILEPHOTO COMPONENT, OTHERWISE SHOW THE PROFILEPHOTO COMPONENT */}
+          {showUpload 
+            ? <UploadProfilePhoto /> 
+            : <ProfilePhoto showUpload={showUpload} src={require('./assets/images/blank-profile-picture.png')} />
+          }
         </ProfilePhotoWrapper>
 
         {/* USER INFORMATION */}
