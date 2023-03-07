@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { palette, styles } from './assets/constants';
 import { Close, Upload, UploadFile } from '@mui/icons-material';
 import UserContext from '../UserContext';
+import { uploadPhoto } from '../photos';
 
 
 const BlurBackground = styled.div`
@@ -142,7 +143,7 @@ function EditHike() {
     event.preventDefault();
 
     // Upload the image to the S3 bucket
-    uploadFile(imageFile);
+    uploadPhoto(imageFile, hike.id);
 
     /**
      * Post the hike to the Hike Table in Dynamo
@@ -195,18 +196,6 @@ function EditHike() {
     const file = event.target.files[0];
     setImageFile(file);
     setHike({ ...hike, imagePath: 'photo' + hike.id });
-  }
-
-  /**
-   * Upload the image to the S3 bucket
-   * @param {*} event 
-   */
-  const uploadFile = async (file) => {
-    try {
-      await Storage.put('photo' + hike.id, file);
-    } catch (error) {
-      console.log('Error uploading file: ', error);
-    }
   }
 
   return (

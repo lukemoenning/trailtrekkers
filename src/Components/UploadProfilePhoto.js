@@ -2,11 +2,13 @@
  * Component for uploading profile photo
  */ 
 
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { palette, styles } from './assets/constants';
 import { Upload } from '@mui/icons-material';
 import { Input, IconButton } from '@mui/material';
+import { uploadPhoto } from '../photos';
+import UserContext from '../UserContext';
 
 
 const UploadProfilePhotoWrapper = styled.div`
@@ -20,47 +22,36 @@ const UploadProfilePhotoWrapper = styled.div`
   cursor: pointer;
 `;
 
-const UploadProfilePhotoInput = styled(Input)`
-  height: 130px;
-  width: 130px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  opacity: ${({ showUpload }) => (showUpload ? 1 : 0)};
-  transition: 200ms ease-in;
-  z-index: 1;
+const UploadInput = styled.input`
+  display: none;
 `;
 
-const UploadProfilePhotoIcon = styled(Upload)`
-  ${'' /* height: 130px;
-  width: 130px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-  opacity: ${({ showUpload }) => (showUpload ? 1 : 0)};
-  transition: 200ms ease-in;
-  z-index: 1; */}
+const UploadIcon = styled(Upload)`
+  ${'' /* background-color: ${palette.primary}; */}
 `;
+
 
 function UploadProfilePhoto() {
+
+  /**
+   * State management pulled from UserContext
+   */
+  const {userInfo} = useContext(UserContext);
+
+  /**
+   * Function to handle uploading a photo, calls uploadPhoto function from photos.js
+   */
+  const handleUpload = (event) => {
+    const file = event.target.files[0];
+    uploadPhoto(file, userInfo.userId);
+  };
+
   return (
     <UploadProfilePhotoWrapper>
-      {/* <UploadProfilePhoto
-        type="file"
-        id="upload-file"
-        inputProps={{ 'aria-label': 'upload file' }}
-        style={{ display: 'none' }}
-      />
-      <label htmlFor="upload-file">
-        <IconButton component="span">
-          <UploadProfilePhotoIcon />
-        </IconButton>
-      </label> */}
-      upload
+      <UploadInput type="file" accept="image/*" id="profile-photo-upload" onChange={(event) => handleUpload(event)}/>
+      <IconButton component="label" htmlFor="profile-photo-upload">
+        <UploadIcon fontSize='large'/>
+      </IconButton>
     </UploadProfilePhotoWrapper>
   );
 }
