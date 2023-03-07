@@ -52,7 +52,6 @@ const EditHikePhotoWrapper = styled.div`
   width: 40%;
   height: 100%;
   border-radius: ${styles.BORDER_RADIUS};
-  outline: 1px solid red;
 `;
 
 const EditHikeInfoWrapper = styled.div`
@@ -60,7 +59,6 @@ const EditHikeInfoWrapper = styled.div`
   flex-direction: column;
   width: 50%;
   height: 100%;
-  outline: 1px solid yellow;
 `;
 
 const TitleAndDistance = styled.div`

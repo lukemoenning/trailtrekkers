@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { palette, styles } from './assets/constants';
 import UserContext from '../UserContext';
 import { Settings } from '@mui/icons-material';
-import { Storage } from 'aws-amplify';
+import { getPhoto } from '../photos';
 
 
 const HikeCardWrapper = styled.div`
@@ -104,27 +104,18 @@ function HikeCard({ hike }) {
   const [userPhoto, setUserPhoto] = useState(null);
   
   /**
-   * Retrieves the hike photo from S3
-   * @param {*} imagePath image path from S3
-   * @returns 
-   */
-  const getPhoto = async (imagePath, setter) => {
-    // try {
-    //   const fetchPhoto = await Storage.get(imagePath).then(photo => (setter(photo)));
-    // } catch (error) {
-    //   console.log('Error retrieving hike photo: ', error);
-    // }
-  };
-
-  /**
    * Retrieves the hike photo from S3 when the component is mounted
    */
   useEffect(() => {
     async function fetchData() {
-      const hikePhoto = await getPhoto(hike.imagePath, setHikePhoto);
+      const hikePhoto = await getPhoto(hike.imagePath);
+      const userPhoto = await getPhoto('photo'+hike.userId);
+      setHikePhoto(hikePhoto);
+      setUserPhoto(userPhoto);
     }
     fetchData();
   }, []);
+
 
   return (
     <HikeCardWrapper>

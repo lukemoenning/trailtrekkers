@@ -14,6 +14,7 @@ import HikeCard from './HikeCard';
 import { Upload } from '@mui/icons-material';
 import { Input, IconButton } from '@mui/material';
 import UploadProfilePhoto from './UploadProfilePhoto';
+import { getPhoto } from '../photos';
 
 
 const ProfileHeader = styled.div`
@@ -101,6 +102,26 @@ function Profile() {
    */
   const [showUpload, setShowUpload] = useState(false);
 
+  /**
+   * State management for the profile photo
+   */
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
+  /**
+   * Retrieves the profile photo from S3 when the component is mounted, if it doesnt exist, set the profile photo to the default
+   */
+  useEffect(() => {
+    async function fetchData() {
+      const profilePhoto = await getPhoto('photo'+userInfo.userId);
+      if (profilePhoto) {
+        setProfilePhoto(profilePhoto);
+      } else {
+        setProfilePhoto(require('./assets/images/blank-profile-picture.png'));
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <BodyNarrow>
 
@@ -113,9 +134,10 @@ function Profile() {
           {/* IF SHOWUPLOAD IS TRUE, SHOW THE UPLOADPROFILEPHOTO COMPONENT, OTHERWISE SHOW THE PROFILEPHOTO COMPONENT */}
           {showUpload 
             ? <UploadProfilePhoto /> 
-            : <ProfilePhoto showUpload={showUpload} src={require('./assets/images/blank-profile-picture.png')} />
+            : <ProfilePhoto src={profilePhoto} />
           }
         </ProfilePhotoWrapper>
+        {console.log(profilePhoto)}
 
         {/* USER INFORMATION */}
         <ProfileInfo>

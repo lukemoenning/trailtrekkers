@@ -18,7 +18,7 @@ const UploadProfilePhotoWrapper = styled.div`
   height: 100%;
   width: 100%;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
   cursor: pointer;
 `;
 

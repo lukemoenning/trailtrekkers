@@ -8,6 +8,7 @@ import { BodyWide } from './Body.styles';
 import UserContext from '../UserContext';
 import { palette, styles } from './assets/constants';
 import Loading from './Loading';
+import { getPhoto } from '../photos';
 
 
 const HomeWrapper = styled.div`
@@ -17,7 +18,6 @@ const HomeWrapper = styled.div`
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  outline: 1px solid red;
 `;
 
 const HomeHeader = styled.p`  
@@ -42,15 +42,14 @@ const HomeHikePhotosWrapper = styled.div`
   grid-gap: 20px;
   width: 100%;
   height: 100%;
-  outline: 1px solid red;
   justify-items: center;
   align-items: center;
 `;
 
-const HomeHikePhoto = styled.div`
+const HomeHikePhoto = styled.img`
   width: 300px;
   height: 300px;
-  background-color: ${palette.BROWN};
+  object-fit: cover;
   border-radius: ${styles.BORDER_RADIUS};
 `;
 
@@ -124,7 +123,7 @@ function Home() {
         {/* HIKE PHOTOS */}
         <HomeHikePhotosWrapper>
           {userHikes ? (userHikes.map((hike) => {
-            return <HomeHikePhoto key={hike.id+'home'} />
+            return <HomeHikePhoto src={getPhoto(hike.imagePath)} key={hike.id+'home'} />
           })) : <Loading />}
         </HomeHikePhotosWrapper>
 
