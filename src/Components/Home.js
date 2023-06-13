@@ -8,7 +8,7 @@ import { BodyWide } from './Body.styles';
 import UserContext from '../UserContext';
 import { palette, styles } from './assets/constants';
 import Loading from './Loading';
-import { getPhoto } from '../photos';
+import HikeMemoryCard from './HikeMemoryCard';
 
 
 const HomeWrapper = styled.div`
@@ -44,13 +44,6 @@ const HomeHikePhotosWrapper = styled.div`
   height: 100%;
   justify-items: center;
   align-items: center;
-`;
-
-const HomeHikePhoto = styled.img`
-  width: 300px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: ${styles.BORDER_RADIUS};
 `;
 
 /**
@@ -91,6 +84,7 @@ function Home() {
    */
   const [myDistance, setMyDistance] = useState(0);
 
+
   /**
    * Sum all the miles from the user's hikes
    */
@@ -123,7 +117,7 @@ function Home() {
         {/* HIKE PHOTOS */}
         <HomeHikePhotosWrapper>
           {userHikes ? (userHikes.map((hike) => {
-            return <HomeHikePhoto src={getPhoto(hike.imagePath)} key={hike.id+'home'} />
+            return <HikeMemoryCard hike={hike} key={hike.id+'home'} />
           })) : <Loading />}
         </HomeHikePhotosWrapper>
 
